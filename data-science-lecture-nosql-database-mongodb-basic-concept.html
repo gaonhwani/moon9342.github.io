@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>NoSQL Database MongoDB(3) - MongoDB Basic Concept</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- Font Awesome CDN 설정 => 느림.. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- JQuery fancybox plugin-->
+    <link rel="stylesheet" href="/assets/built/fancybox.css">
+    <script src="/assets/js/fancybox.js"></script>
+
+    <!-- custom.css -->
+    <link rel="stylesheet" href="/assets/built/custom.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- gist.css -->
+    <link rel="stylesheet" href="/assets/built/better-gist-styles.css">
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--Dl Menu-->
+    <script src="/assets/js/modernizr.custom.js"></script>
+    <script src="/assets/js/jquery.dlmenu.js"></script>
+    <script src="/assets/js/menu_main.js"></script>
+
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-2687024418565562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)" />
+    <link rel="shortcut icon" href="https://moon9342.github.io/assets/built/images/favicon.jpg" type="image/png" />
+    <link rel="canonical" href="https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="IT Technical Training" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NoSQL Database MongoDB(3) - MongoDB Basic Concept" />
+    <meta property="og:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta property="og:url" content="https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept" />
+    <meta property="og:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2019-06-04T01:40:00+09:00" />
+    <meta property="article:modified_time" content="2019-06-04T01:40:00+09:00" />
+    <meta property="article:tag" content="Data-science" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NoSQL Database MongoDB(3) - MongoDB Basic Concept" />
+    <meta name="twitter:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta name="twitter:url" content="https://moon9342.github.io/" />
+    <meta name="twitter:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="IT Technical Training" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Data-science" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "IT Technical Training",
+        "logo": "https://moon9342.github.io/"
+    },
+    "url": "https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://moon9342.github.io/assets/built/images/digital-marketing.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept"
+    },
+    "description": "Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)"
+}
+    </script>
+
+    <!-- <script type="text/et-cetera" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/et-cetera">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <!-- 사용자 browser 확인 코드 - Chrome이 아니면 경고 메시지 출력 -->
+
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        var _iPhone = false;
+        var _chrome = false;
+        var result = false;
+        if (agent.indexOf("iphone") != -1) {
+            _iPhone = true;
+        }
+        if (agent.indexOf("chrome") != -1) {
+            _chrome = true;
+        }
+
+        if( _iPhone || _chrome ) {
+            result = true;
+        }
+
+        if( !result ) {
+            alert("이 블로그는 Google Chrome Browser에 최적화 되어 있습니다 !!");
+        }
+
+    </script>
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="NoSQL Database MongoDB(3) - MongoDB Basic Concept" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="/">IT Technical Training</a>
+            
+        
+        
+            
+<ul class="nav" role="menu">
+<!--    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>-->
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+<!--
+    <li class="nav-data-analysis-article" role="menuitem"><a href="/author/data-analysis/">Data Analysis(R)</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/author/python/">Python</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/tag/jekyll/">Jekyll</a></li>
+    <li class="nav-miscellaneous-article" role="menuitem"><a href="/author/fragmentary-knowledge/">Miscellaneous Article</a></li>
+-->
+<!--
+    <li class="nav-archive" role="menuitem">
+        <a href="/archive.html">All Posts</a>
+    </li>
+-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/jekyll/">Jekyll Blog 생성</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/python/">Python</a>
+    </li>
+    <li class="nav-data-science" role="menuitem">
+        <a href="/tag/data-science/">Data Science</a>
+    </li>
+    <li class="nav-machine-learning" role="menuitem">
+        <a href="/tag/machine-learning/">Machine Learning</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/r/">R 기초강의</a>
+    </li>
+<!--    <li class="nav-python" role="menuitem">-->
+<!--        <a href="/tag/angular/">Angular</a>-->
+<!--    </li>-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/et-cetera/">Et cetera</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+        <a href="/author_archive.html">All Posts</a>
+    </li>
+</ul>
+
+<!-- 아래 내용이 있으면 홈 화면 좌측 상단에 Navigation 버튼이 생성됨.. 굳이 필요없어서 comment 처리 -->
+
+<!--
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+    <button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+        <li><a href="https://moon9342.github.io/">Home</a></li>
+        <li>
+            <a href="#">About</a>
+            <ul class="dl-submenu">
+                <li style="text-align: center">
+                    <img src="https://moon9342.github.io/assets/built/images/photo.jpg" alt="SungHoon Moon photo" class="author-photo">
+                </li>
+                <li>
+                    <h4>SungHoon Moon</h4>
+                    <p>Director of ATGLab. <br>Ph.D. in Computer Science</p>
+                </li>
+                <li><a href="https://moon9342.github.io/about/"><i class="fa fa-external-link"></i><span class="btn btn-inverse"> Learn More</span></a></li>
+                <li>
+                <a href="mailto:moon9342@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+            </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </ul>
+        </li>
+        <li>
+            <a href="#">Posts</a>
+            <ul class="dl-submenu">
+                <li><a href="https://moon9342.github.io/archive">All Posts</a></li>
+                <li><a href="https://moon9342.github.io/author_archive">All Tags</a></li>
+            </ul>
+        </li>
+        
+    </ul>
+</nav>
+-->
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full post tag-front-end ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 3 June 2019"> 3 June 2019</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/data-science/'>DATA-SCIENCE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">NoSQL Database MongoDB(3) - MongoDB Basic Concept</h1>
+            </header>
+
+            
+<!--
+            post에 cover image를 표시하지 않게 설정
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)">
+            </figure>
+-->
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Data-Science 강의는 여러 절로 구성되어 있습니다. </span></p>
+<ul class="table-of-contents-list">
+    <li><a href="./data-science-lecture-relational-database-mysql-introduction">Relational Database MySQL(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-setup">Relational Database MySQL(2) - Install 및 환경설정</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-first-execution">Relational Database MySQL(3) - MySQL 전체 운영 실습</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-data-modeling">Relational Database MySQL(4) - Data Modeling</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-utility">Relational Database MySQL(5) - MySQL Utility</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part1">Relational Database MySQL(6) - SQL 기본</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part2">Relational Database MySQL(7) - SQL 고급(1)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part3">Relational Database MySQL(8) - SQL 고급(2)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-table-view">Relational Database MySQL(9) - Table &amp; View</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-1">Relational Database MySQL(10) - Index</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-2">Relational Database MySQL(11) - Index 성능비교</a></li>
+
+    <li><a href="./data-science-lecture-nosql-database-mongodb-introduction">NoSQL Database MongoDB(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-data-modeling">NoSQL Database MongoDB(2) - NoSQL Data Modeling</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-basic-concept">NoSQL Database MongoDB(3) - MongoDB Basic Concept</a></li>
+
+    <li><a href="./data-science-lecture-python-introduction">Python 데이터분석 라이브러리(0) - Introduction</a></li>
+    <li><a href="./data-science-lecture-python-numpy">Python 데이터분석 라이브러리(1) - NumPy</a></li>
+    <li><a href="./data-science-lecture-python-numpy-exercise">Python 데이터분석 라이브러리(2) - NumPy(Exercise)</a></li>
+
+    <li><a href="./data-science-lecture-python-pandas-series">Python 데이터분석 라이브러리(3) - Pandas(Series)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-basic">Python 데이터분석 라이브러리(4) - Pandas(DataFrame 생성)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-indexing">Python 데이터분석 라이브러리(5) - Pandas(DataFrame indexing)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-functions">Python 데이터분석 라이브러리(6) - Pandas(DataFrame functions)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-merge">Python 데이터분석 라이브러리(7) - Pandas(DataFrame merge)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-transform">Python 데이터분석 라이브러리(8) - Pandas(DataFrame 제어)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-group">Python 데이터분석 라이브러리(9) - Pandas(DataFrame Grouping)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-exercise">Python 데이터분석 라이브러리(10) - Pandas(Exercise)</a></li>
+    <li><a href="./data-science-lecture-python-matplotlib">Python 데이터분석 라이브러리(11) - matplotlib</a></li>
+    <li><a href="./data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+    <li><a href="./data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+    <li><a href="./data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - folium</a></li>
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-manipulation">Python 데이터분석 라이브러리(6) - Pandas(DataFrame 조작)</a></li>    -->
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-multi-index">Python 데이터분석 라이브러리(8) - Pandas(DataFrame multi index)</a></li>    -->
+</ul>
+
+<hr />
+
+<p><strong class="subtitle_fontAwesome">MongoDB Basic Concept</strong></p>
+
+<p>드디어 <code class="highlighter-rouge">MongoDB</code>에 대해서 알아볼 차례입니다. 기본적인 개념부터 알아보도록 하겠습니다.</p>
+
+<p><code class="highlighter-rouge">MongoDB</code>는 <code class="highlighter-rouge">10gen</code>사에서 <code class="highlighter-rouge">C++</code>언어를 이용해 개발한 <code class="highlighter-rouge">NoSQL</code> 솔루션 입니다. 상당히 범용적으로
+사용이 가능하다는 특징이 있으며 당연히 스키마를 고정하지 않고 사용합니다. (<code class="highlighter-rouge">schema-less</code>)</p>
+
+<p>데이터를 구조화해서 <code class="highlighter-rouge">JSON</code>형태로 저장하는 방식을 이용하고 있습니다. 또한 <code class="highlighter-rouge">JOIN</code>이 불가능하기 때문에
+<code class="highlighter-rouge">JOIN</code>이 필요없도록 데이터를 설계해야 합니다.</p>
+
+<p>한가지 기억해야 할 점이 있는데 <code class="highlighter-rouge">MongoDB</code>는 메모리맵 형태의 파일엔진 DB이기 때문에 <strong>메모리에 상당히 의존적</strong>
+입니다. 즉, 메모리의 크기가 성능을 좌우하게 되며 가용 메모리를 넘어설 경우 성능이 급격히 저하되는 문제점을
+가지고 있습니다.</p>
+
+<p>일반적으로 사용하는 데이터는 쌓아놓고 삭제가 없는 경우가 적합합니다. 대표적인 예로 <strong>로그데이터</strong>같은 것이
+있을 수 있습니다.</p>
+
+<p>당연히 <code class="highlighter-rouge">RDBMS</code>의 강점인 <code class="highlighter-rouge">Transaction</code>처리가 필수인 금융, 결제, 빌링과 같은 부분에는 부적합합니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Document Data Model</strong></p>
+
+<p><code class="highlighter-rouge">MongoDB</code>는 <code class="highlighter-rouge">Document Data Model</code>을 사용합니다. 간단하게 특징을 살펴보면,</p>
+
+<ul>
+  <li>속성의 이름과 값으로 이루어진 쌍의 집합으로 구성</li>
+  <li>속성은 문자열이나 숫자, 날짜뿐 아니라 다양한 형식이 올 수 있다.</li>
+  <li>배열 혹은 다른 <code class="highlighter-rouge">Document</code>를 지정하는 것도 가능</li>
+  <li>하나의 <code class="highlighter-rouge">Document</code>에 필요한 모든 정보를 담아야 합니다.</li>
+  <li><code class="highlighter-rouge">JOIN</code>이 불가능하기 때문에 하나의 쿼리로 모두 해결이 되게끔 설계해야 합니다.</li>
+</ul>
+
+<p>아래의 그림은 간단한 <code class="highlighter-rouge">Document</code>형태의 구조입니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-document-sample.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-document-sample.png" alt="document sample" />
+</a></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">JSON</strong></p>
+
+<p><code class="highlighter-rouge">JSON</code>은 <code class="highlighter-rouge">JavaScript Object Notation</code>의 약자입니다. <code class="highlighter-rouge">MongoDB</code>에서 사용하는
+<code class="highlighter-rouge">Document</code>는 이 <code class="highlighter-rouge">JSON</code> 형식으로 되어 있습니다.</p>
+
+<p><code class="highlighter-rouge">JSON</code>은 다음과 같은 특성을 가집니다.</p>
+
+<ul>
+  <li>lightweight 데이터 교환방식</li>
+  <li>사람이 읽고 쓰기 쉽고, 기계가 파싱하고 생성하기 쉬움</li>
+  <li>XML이 가지는 유연성과 구조적 데이터 표현이 가능하면서 XML의 오버헤드를 줄일 수 있음</li>
+  <li>따라서 송수신 데이터 형식으로 사용하기 적합하며 클라이언트 측에서도 처리 효율이 좋음</li>
+</ul>
+
+<p><code class="highlighter-rouge">JSON</code>의 간단한 예를 그림으로 보면 다음과 같습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-json-sample.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-json-sample.png" alt="JSON sample" />
+</a></p>
+
+<p>그림에서 알 수 있듯이 모든 <code class="highlighter-rouge">JSON</code>은 중괄호(<code class="highlighter-rouge">{}</code>)로 시작하고 끝나며 <strong>문자열</strong>과
+값으로 구성되고 <code class="highlighter-rouge">:</code>으로 구분합니다.</p>
+
+<p>각각의 멤버들은 <code class="highlighter-rouge">,</code>로 구분하며 배열은 <code class="highlighter-rouge">[]</code>로 표현합니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 구성</strong></p>
+
+<p><code class="highlighter-rouge">MongoDB</code>는 수평적 확장이라는 특징을 가집니다. 쉽게 말하면 한 대 이상의 서버로 구성하는
+것이 일반적이라는 말입니다. <code class="highlighter-rouge">MongoDB</code>는 메모리 사용 가능량에 대비해서 성능이 좌우되기 
+때문에 독립된 서버에서 실행하는 것이 좋습니다.</p>
+
+<p>기본적으로 <code class="highlighter-rouge">MongoDB</code>는 <code class="highlighter-rouge">mongod</code>라는 실행파일을 단위로 실행합니다.</p>
+
+<p>데이터를 한 곳에만 저장하면 데이터 손상 시 문제가 발생하기 때문에 적어도 보통 3개 이상의
+<code class="highlighter-rouge">Replica</code>단위로 구성해 데이터를 복제합니다.(샤딩)</p>
+
+<p>또한 <code class="highlighter-rouge">mongos</code>라는 라우터를 이용하여 마치 한대의 데이터베이스 서버처럼 사용이 가능합니다.</p>
+
+<p>간단하게 그림으로 표현하면 다음과 같습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-architecture-sample.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-architecture-sample.png" alt="Architecture Sample" />
+</a></p>
+
+<p><code class="highlighter-rouge">MongoDB</code>를 사용하는 사용자의 90% 정도는 <code class="highlighter-rouge">Linux</code> 머신을 이용합니다. 그 이유는 많은 수의
+machine이 필요하고 상대적으로 OS 비용이 적은 Linux를 선호하기 때문입니다. 또한 <code class="highlighter-rouge">MongoDB</code>
+자체의 성능이 메모리에 많이 좌우되기 때문에 메모리 관리에 특히 뛰어난 <code class="highlighter-rouge">Linux</code> 또는 <code class="highlighter-rouge">Unix</code>
+베이스의 운영체제를 선호합니다. <code class="highlighter-rouge">Windows</code>는 설치하고 사용하기 편하죠.</p>
+
+<p><code class="highlighter-rouge">MongoDB</code>가 지원하는 언어는 다음과 같습니다.</p>
+
+<ul>
+  <li>Java / JavaScript</li>
+  <li>Perl / PHP / Python</li>
+  <li>Ruby / Scala</li>
+</ul>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 다운로드 및 설치</strong></p>
+
+<p>이제 <code class="highlighter-rouge">MongoDB</code>를 실제로 설치해 보죠.</p>
+
+<p><a href="https://www.mongodb.com/" target="_blank">MongoDB Official Home</a>으로 접속해서 
+<code class="highlighter-rouge">Product &gt; Community Edition &gt; Community Server</code>를 선택하면 다운로드 받을 수 있습니다.</p>
+
+<p>현재 버전이 <code class="highlighter-rouge">5.0.5</code>입니다. <code class="highlighter-rouge">Windows</code>용 <code class="highlighter-rouge">msi</code> 파일을 다운로드 한 후 <code class="highlighter-rouge">default</code> 형태로
+설치합니다. <code class="highlighter-rouge">Compass</code>가 같이 설치되는데 우리는 일단 <code class="highlighter-rouge">console</code>에서 간단하게 알아볼 것입니다.</p>
+
+<p>우리는 설치 시 <code class="highlighter-rouge">MongoDB</code>를 <code class="highlighter-rouge">Windows Service</code>로 등록해서 사용한다고 했으니 <code class="highlighter-rouge">MongoDB</code>라는
+이름으로 서비스가 실행되고 있을 것입니다. 확인 한번 하고 가죠.</p>
+
+<p><a href="/assets/built/images/database-mongodb-service-register.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-service-register.png" alt="MongoDB Service register" />
+</a></p>
+
+<p><code class="highlighter-rouge">PATH</code>를 등록해야 사용하기 편합니다. <code class="highlighter-rouge">C:\Program Files\MongoDB\Server\5.0\bin</code> 경로를
+환경변수 <code class="highlighter-rouge">PATH</code>에 등록한 후 <code class="highlighter-rouge">shell</code>을 실행시켜 보겠습니다.</p>
+
+<p>서비스로 실행하는 <code class="highlighter-rouge">mongod</code>는 특정 <code class="highlighter-rouge">mongod.cfg</code>파일을 이용해 환경설정을 하고 시작됩니다.</p>
+
+<p><code class="highlighter-rouge">C:\Program Files\MongoDB\Server\5.0\bin\mongod.cfg</code> 파일을 보면 아래와 같이 되어 있는데
+여기서 <code class="highlighter-rouge">storage &gt; dbPath</code>라는 부분을 보면 특정 경로가 잡혀 있습니다. 이 경로가 default로
+사용되는 Database 경로입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># mongod.conf</span>
+
+<span class="c"># for documentation of all options, see:</span>
+<span class="c">#   http://docs.mongodb.org/manual/reference/configuration-options/</span>
+
+<span class="c"># Where and how to store data.</span>
+<span class="n">storage</span><span class="p">:</span>
+  <span class="n">dbPath</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">MongoDB</span>\<span class="n">Server</span>\<span class="mf">5.0</span>\<span class="n">data</span>
+  <span class="n">journal</span><span class="p">:</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="n">true</span>
+<span class="c">#  engine:</span>
+<span class="c">#  wiredTiger:</span>
+
+</code></pre></div></div>
+
+<p>자 이제 <code class="highlighter-rouge">shell</code>을 실행시켜 보겠습니다.</p>
+
+<p><code class="highlighter-rouge">cmd</code>를 이용해 도스창을 열고 <code class="highlighter-rouge">mongo</code> 명령어를 입력하면 아래와 같이 <code class="highlighter-rouge">shell</code>이 실행됩니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-shell.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-shell.png" alt="MongoDB Shell 실행" />
+</a></p>
+
+<p>만약 다른 서버에 접속하려면 <code class="highlighter-rouge">mongo ip:port</code> 형식으로 실행하면 다른 컴퓨터의 <code class="highlighter-rouge">MongoDB</code>에 접속이
+가능합니다.</p>
+
+<p>이제 명령어를 하나씩 살펴보겠습니다.</p>
+
+<p>가장 먼저 <code class="highlighter-rouge">MongoDB</code>를 안전하게 종료하는 방법입니다. 우리는 지금 <code class="highlighter-rouge">Windows Service</code>로 등록해서
+사용하고 있긴 하지만 해당 서비스를 명령어를 이용해서 안전하게 종료하는 방법을 알아보겠습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span> <span class="nx">use</span> <span class="nx">admin</span><span class="p">;</span>
+
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">shutdownServer</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p>위와 같은 명령어를 이용하면 <code class="highlighter-rouge">MongoDB</code> 자체를 안전하게 종료할 수 있습니다. 
+서비스를 살펴보면 다음과 같이 <code class="highlighter-rouge">MongoDB</code>가 중지되어 있는 것을 확인할 수 있습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-server-stop-service.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-server-stop-service.png" alt="MongoDB Stop Service 확인" />
+</a></p>
+
+<p><code class="highlighter-rouge">Windows Service</code>에서 다시 <code class="highlighter-rouge">MongoDB</code>를 기동시킨 후 <code class="highlighter-rouge">shell</code>로 다시 접속합니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 데이터베이스 생성 및 조회</strong></p>
+
+<p><code class="highlighter-rouge">MongDB</code>안에 만들어져 있는 database 목록을 조회하려면 다음과 같이 합니다. 
+참고로 이 작업은 <code class="highlighter-rouge">shell</code>을 이용해도 좋지만 다른 <code class="highlighter-rouge">MongoDB</code> client 프로그램을 이용해도
+좋습니다. 사실 사용하기에는 <code class="highlighter-rouge">shell</code>은 불편한 점이 많습니다. 개인적으로 <code class="highlighter-rouge">JetBrain의 DataGrip</code>을
+선호하는데 유료버전(30일 trial)입니다. 교육용 license를 받을 수 있는 경우 고려해 볼 만 합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span><span class="p">;</span>
+
+<span class="err">#</span> <span class="nx">admin</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="err">#</span> <span class="nx">config</span>  <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="err">#</span> <span class="nx">local</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+
+</code></pre></div></div>
+
+<p>특정 database를 사용하려면 <code class="highlighter-rouge">use</code>라는 명령을 이용하면 됩니다. 만약 존재하지 않는
+database에 대해 <code class="highlighter-rouge">use</code> 명령을 이용하면 database를 생성하게 됩니다. 생성한 후에는
+생성한 database를 사용하게 됩니다. 또한 현재 사용중인 database를 확인할 때는
+<code class="highlighter-rouge">db</code>라는 명령을 이용하시면 됩니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span><span class="p">;</span>
+<span class="nx">admin</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">config</span>  <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">local</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">use</span> <span class="nx">my_tutorial</span><span class="p">;</span>
+<span class="nx">switched</span> <span class="nx">to</span> <span class="nx">db</span> <span class="nx">my_tutorial</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span><span class="p">;</span>
+<span class="nx">admin</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">config</span>  <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">local</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">book</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Justice"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"Michael Joseph Sandel"</span><span class="p">});</span>
+<span class="nx">WriteResult</span><span class="p">({</span> <span class="s2">"nInserted"</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span><span class="p">;</span>
+<span class="nx">admin</span>        <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">config</span>       <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">local</span>        <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">my_tutorial</span>  <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">;</span>
+<span class="nx">my_tutorial</span>
+<span class="o">&gt;</span>
+
+</code></pre></div></div>
+
+<p>데이터베이스에 데이터가 존재하지 않으면 <code class="highlighter-rouge">show dbs;</code> 명령으로 조회되지 않습니다. 그래서 하나의
+데이터를 임의로 저장하고 조회하면 나타나게 됩니다. 위의 예에서 <code class="highlighter-rouge">book</code>은 <code class="highlighter-rouge">collection</code>입니다.
+위의 예처럼 <code class="highlighter-rouge">collection</code>은 미리 생성하지 않아도 사용할 수 있습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 데이터베이스 삭제</strong></p>
+
+<p>database를 제거할땐 <code class="highlighter-rouge">db.dropDatabase();</code> 명령어를 사용합니다.
+이 명령어를 사용하기 전, <code class="highlighter-rouge">use DATABASE_NAME</code> 으로 삭제하고자 하는 데이터베이스를 선택해줘야합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">use</span> <span class="nx">my_tutorial</span><span class="p">;</span>
+<span class="nx">switched</span> <span class="nx">to</span> <span class="nx">db</span> <span class="nx">my_tutorial</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">dropDatabase</span><span class="p">();</span>
+<span class="p">{</span> <span class="s2">"ok"</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span><span class="p">;</span>
+<span class="nx">admin</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">config</span>  <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="nx">local</span>   <span class="mf">0.000</span><span class="nx">GB</span>
+<span class="o">&gt;</span>
+<span class="o">&gt;</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB collection 생성 및 조회</strong></p>
+
+<p><code class="highlighter-rouge">MongoDB</code>는 <code class="highlighter-rouge">RDBMS</code>의 <code class="highlighter-rouge">Table</code>에 해당하는 <code class="highlighter-rouge">collection</code>이라는 개념을 가지고 있습니다.
+<code class="highlighter-rouge">MongoDB</code>에서 저장하는 단위라고 보시면 됩니다. 기존의 <code class="highlighter-rouge">RDBMS</code>는 <code class="highlighter-rouge">Schema</code>를 정해놓고 그 
+<code class="highlighter-rouge">Schema</code>에 맞는 데이터만 저장할 수 있었는데 <code class="highlighter-rouge">collection</code>은 어떤 종류의 데이터라도 다 
+저장할 수 있습니다.</p>
+
+<p><code class="highlighter-rouge">collection</code>을 생성할때는 <code class="highlighter-rouge">db.createCollection(name, [options])</code> 명령어를 사용합니다.</p>
+
+<p>name은 생성하려는 컬렉션의 이름이며 option은 document 타입으로 구성된 해당 컬렉션의 설정값입니다.
+options 매개변수는 선택적인(Optional) 매개변수로서 생략하셔도 되고, 필요에따라 사용하면 됩니다.</p>
+
+<p>사용할 수 있는 option을 살펴보면 다음과 같습니다.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">capped</code> : <code class="highlighter-rouge">Boolean</code>, 이 값을 true 로 설정하면 capped collection 을 활성화 시킵니다. 
+Capped collection 이란, 고정된 크기(fixed size) 를 가진 컬렉션으로서, size 가 초과되면 
+가장 오래된 데이터를 덮어씁니다. 이 값을 true로 설정하면 size 값을 꼭 설정해야합니다.
+또 주의해야 할 점은 <code class="highlighter-rouge">capped</code> collection은 삭제가 되지 않습니다. 대신 insert 속도가 빠릅니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">autoIndexId</code>: <code class="highlighter-rouge">Boolean</code>, 이 값을 true로 설정하면, _id 필드에 index를 자동으로 생성합니다.
+기본값은 false 입니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">size</code> : <code class="highlighter-rouge">number</code>, Capped collection 을 위해 해당 컬렉션의 최대 사이즈(maximum size)를 
+bytes로 지정합니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">max</code>: <code class="highlighter-rouge">number</code>, 해당 컬렉션에 추가 할 수 있는 최대 갯수를 설정합니다.</p>
+  </li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"books"</span><span class="p">)</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"articles"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">capped</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">size</span><span class="p">:</span> <span class="mi">6142800</span><span class="p">,</span>
+    <span class="na">max</span><span class="p">:</span> <span class="mi">10000</span>
+<span class="p">})</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">people</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"velopert"</span><span class="p">})</span>
+
+<span class="nx">show</span> <span class="nx">collections</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB collection 삭제</strong></p>
+
+<p><code class="highlighter-rouge">collection</code>을 제거 할 땐 <code class="highlighter-rouge">drop()</code>을 사용합니다.
+이 명령어를 사용하기 전에 사용 할 데이터베이스를 우선 설정해야합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">use</span> <span class="nx">test</span><span class="p">;</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">people</span><span class="p">.</span><span class="nx">drop</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">JavaScript의 활용</strong></p>
+
+<p><code class="highlighter-rouge">MongoDB Shell</code>에서는 <code class="highlighter-rouge">JavaScript</code> 문법을 사용할 수 있습니다. 물론 <code class="highlighter-rouge">DataGrip</code>과 같은 툴에서도
+<code class="highlighter-rouge">JavaScript</code>를 이용해 쿼리를 실행할 수 있습니다. 그래서 간단한 JavaScript 문법은 알고 가시는게
+좋습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// 변수 선언</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+<span class="c1">// 일반 제어문</span>
+
+<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s1">'짝수 : '</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s1">'홀수 : '</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// JavaScript 객체 저장 (JSON과 같은 형식)</span>
+
+<span class="kd">let</span> <span class="nx">myObj1</span> <span class="o">=</span> <span class="p">{</span><span class="na">age1</span> <span class="p">:</span> <span class="mi">25</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">myObj2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"age2"</span> <span class="p">:</span> <span class="mi">25</span><span class="p">};</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="nx">myObj1</span><span class="p">);</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">myObj2</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">myObj3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span> <span class="p">:</span> <span class="s1">'아이유'</span><span class="p">,</span>
+    <span class="na">hobby</span> <span class="p">:</span> <span class="p">[</span><span class="s1">'게임'</span><span class="p">,</span> <span class="s1">'SNS'</span><span class="p">,</span> <span class="s1">'운동'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="nx">myObj3</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 데이터 저장</strong></p>
+
+<p>이번에는 <code class="highlighter-rouge">collection</code>에 데이터를 저장하는 방법에 대해서 알아보겠습니다. 
+<code class="highlighter-rouge">insertOne()</code>, <code class="highlighter-rouge">insertMany()</code> 와 같은 함수를 사용하여 <code class="highlighter-rouge">document</code>를 
+추가 할 수 있습니다.</p>
+
+<p>이 명령어를 사용하기 전 데이터를 추가 할 데이터베이스를 당연히 선택해주어야합니다.
+또한 배열형식의 인자를 전달해주면 여러 다큐먼트를 동시에 추가 할 수 있습니다.
+또한 collection의 document 리스트를 확인할때는 <code class="highlighter-rouge">db.COLLECTION_NAME.find()</code> 
+함수를 사용합니다.</p>
+
+<p>아래의 코드를 보시죠.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">({</span>
+    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"MongoDB Guide"</span><span class="p">,</span>
+    <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"홍길동"</span>
+<span class="p">});</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertMany</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"아이유"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book2"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"김연아"</span><span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="c1">// 아래와 같은 경우 우리가 원하는 방식으로 입력이 되지 않습니다.</span>
+<span class="c1">// insertOne, insertMany를 구분해서 사용해야 합니다.</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"아이유"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book2"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"김연아"</span><span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p>당연히 <code class="highlighter-rouge">JavaScript</code> 코드와 함께 사용해서 <code class="highlighter-rouge">document</code>를 입력할 수 있습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book"</span> <span class="o">+</span> <span class="nx">i</span><span class="p">,</span> <span class="s2">"no"</span><span class="p">:</span> <span class="s1">'No.'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">}</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 데이터 삭제</strong></p>
+
+<p><code class="highlighter-rouge">collection</code>에 저장된 <code class="highlighter-rouge">document</code>를 삭제할 수 있습니다. 
+<code class="highlighter-rouge">removeOne()</code>, <code class="highlighter-rouge">removeMany()</code> 함수를 사용하여 <code class="highlighter-rouge">document</code>를 제거 할 수 있습니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">use</span> <span class="nx">test</span><span class="p">;</span>
+
+<span class="c1">// collection books 삭제</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">drop</span><span class="p">();</span>
+
+<span class="c1">// collection books 생성</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"books"</span><span class="p">)</span>
+
+<span class="c1">// 아래처럼 capped collection을 만들면</span>
+<span class="c1">// 삭제가 되지 않습니다. 대신 빠른 insert 처리가 가능합니다.</span>
+<span class="c1">//db.createCollection("books", {</span>
+<span class="c1">//    capped: true,</span>
+<span class="c1">//    size: 6142800,</span>
+<span class="c1">//    max: 10000</span>
+<span class="c1">//})</span>
+
+<span class="c1">// collection안의 데이터(document) 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+
+<span class="c1">// books collection에 데이터 입력</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertMany</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"아이유"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book2"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"김연아"</span><span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book"</span> <span class="o">+</span> <span class="nx">i</span><span class="p">,</span> <span class="s2">"no"</span><span class="p">:</span> <span class="s1">'No.'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">}</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 모든 데이터 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+
+<span class="c1">// 데이터 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">})</span>
+
+<span class="c1">// 원하는 데이터 삭제(1개만 삭제)</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">deleteOne</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">})</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">})</span>
+
+<span class="c1">// 원하는 데이터 삭제(여러개 삭제)</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">deleteMany</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">})</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Book1"</span><span class="p">})</span>
+
+<span class="c1">// 모든 데이터 삭제</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">deleteMany</span><span class="p">({})</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">MongoDB 데이터 조회</strong></p>
+
+<p>이번에는 <code class="highlighter-rouge">collection</code>안의 <code class="highlighter-rouge">document</code>를 조회하는 방법에 대해서 자세히 알아보겠습니다.</p>
+
+<p><code class="highlighter-rouge">document</code>를 조회하는 함수는 <code class="highlighter-rouge">find()</code> 입니다. 다음과 같이 사용합니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">db.COLLECTION_NAME.find(query, projection)</code></p>
+</blockquote>
+
+<p>여기에 사용되는 매개변수는 다음과 같습니다.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">query</code>: <code class="highlighter-rouge">document</code>, Optional(선택적). 다큐먼트를 조회할 때 기준을 정합니다. 
+기준이 없이 컬렉션에 있는 모든 다큐먼트를 조회 할때는 이 매개변수를 비우거나 비어있는 다큐먼트 {} 를 사용합니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">projection</code>: <code class="highlighter-rouge">document</code>, Optional. 다큐먼트를 조회할 때 보여질 <code class="highlighter-rouge">field</code>를 설정합니다.</p>
+  </li>
+</ul>
+
+<p>반환값(return 값)은 <code class="highlighter-rouge">cursor</code> 입니다.
+<code class="highlighter-rouge">criteria</code>에 해당하는 document들을 선택하여 cursor를 반환합니다. 
+<code class="highlighter-rouge">cursor</code>는 query 요청의 결과값을 가르키는 <code class="highlighter-rouge">pointer</code>로 <code class="highlighter-rouge">cursor</code>객체를 통하여 보이는 
+데이터의 수를 제한 할 수 있고, 데이터를 sort 할 수 도 있습니다. 이는 10분동안 사용되지 않으면 만료된다는
+것도 추가적으로 기억해 둬야 합니다.</p>
+
+<p>자 그럼 간단한 데이터를 입력하고 기본적인 조회부터 해 보기로 하죠.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// 데이터베이스를 선택합니다.</span>
+<span class="nx">use</span> <span class="nx">test</span><span class="p">;</span>
+
+<span class="c1">// 만약 articles collection이 존재한다면 삭제합니다.</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">drop</span><span class="p">();</span>
+
+<span class="c1">// articles collection을 생성합니다.</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"articles"</span><span class="p">);</span>
+
+<span class="c1">// document를 여러개 입력합니다.</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">insertMany</span><span class="p">([</span>
+    <span class="p">{</span>
+        <span class="s2">"title"</span> <span class="p">:</span> <span class="s2">"article01"</span><span class="p">,</span>
+        <span class="s2">"content"</span> <span class="p">:</span> <span class="s2">"content01"</span><span class="p">,</span>
+        <span class="s2">"writer"</span> <span class="p">:</span> <span class="s2">"홍길동"</span><span class="p">,</span>
+        <span class="s2">"likes"</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">"comments"</span> <span class="p">:</span> <span class="p">[</span> <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">"title"</span> <span class="p">:</span> <span class="s2">"article02"</span><span class="p">,</span>
+        <span class="s2">"content"</span> <span class="p">:</span> <span class="s2">"content02"</span><span class="p">,</span>
+        <span class="s2">"writer"</span> <span class="p">:</span> <span class="s2">"신사임당"</span><span class="p">,</span>
+        <span class="s2">"likes"</span> <span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+        <span class="s2">"comments"</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">"name"</span> <span class="p">:</span> <span class="s2">"이선희"</span><span class="p">,</span>
+                <span class="s2">"message"</span> <span class="p">:</span> <span class="s2">"좋은글"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">"title"</span> <span class="p">:</span> <span class="s2">"article03"</span><span class="p">,</span>
+        <span class="s2">"content"</span> <span class="p">:</span> <span class="s2">"content03"</span><span class="p">,</span>
+        <span class="s2">"writer"</span> <span class="p">:</span> <span class="s2">"강감찬"</span><span class="p">,</span>
+        <span class="s2">"likes"</span> <span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="s2">"comments"</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">"name"</span> <span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+                <span class="s2">"message"</span> <span class="p">:</span> <span class="s2">"좋은글"</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">"name"</span> <span class="p">:</span> <span class="s2">"장범준"</span><span class="p">,</span>
+                <span class="s2">"message"</span> <span class="p">:</span> <span class="s2">"좋은글"</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]);</span>
+
+<span class="c1">// 모든 document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+
+<span class="c1">// writer 값이 '신사임당'인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'writer'</span><span class="p">:</span> <span class="s1">'신사임당'</span> <span class="p">}</span> <span class="p">);</span>      <span class="c1">// 1건 조회</span>
+
+<span class="c1">// likes 값이 30 이하인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'likes'</span><span class="p">:</span> <span class="p">{</span> <span class="na">$lte</span><span class="p">:</span> <span class="mi">30</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>   <span class="c1">// 2건 조회</span>
+
+</code></pre></div></div>
+
+<p>맨 마지막에 연산자가 등장했습니다. 이 연산자는 잘 알아둘 필요가 있습니다. 
+여기에서는 자주 사용되는 몇가지 연산자를 위주로 알아보겠습니다.</p>
+
+<ul>
+  <li>비교(<code class="highlighter-rouge">Comparison</code>) 연산자</li>
+</ul>
+
+<p><a href="/assets/built/images/database-mongodb-comparison-operator.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-comparison-operator.png" alt="MongoDB 비교 연산자" />
+</a></p>
+
+<p>간단한 예를 들어보기로 하죠.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// likes 값이 10보다 크고 30보다 작은 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'likes'</span><span class="p">:</span> <span class="p">{</span> <span class="na">$gt</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="na">$lt</span><span class="p">:</span> <span class="mi">30</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>   <span class="c1">// 1건 조회( likes : 23 )</span>
+
+<span class="c1">// writer 값이 배열 ['이순신', '을지문덕', '강감찬', '홍길동'] 안에 속하는 값인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'writer'</span><span class="p">:</span> <span class="p">{</span> <span class="na">$in</span><span class="p">:</span> <span class="p">[</span><span class="s1">'이순신'</span><span class="p">,</span> <span class="s1">'을지문덕'</span><span class="p">,</span> <span class="s1">'강감찬'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">]</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+<span class="c1">// 2건 조회( writer : 홍길동, 강감찬 )</span>
+
+<span class="c1">// comment 값이 '장범준'인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'comments.name'</span><span class="p">:</span> <span class="s1">'장범준'</span> <span class="p">}</span> <span class="p">);</span>  <span class="c1">// 1건 조회</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>논리(<code class="highlighter-rouge">Logical</code>) 연산자</li>
+</ul>
+
+<p>일반적인 논리 연산을 수행하는 연산자 입니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-logical-operator.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-logical-operator.png" alt="MongoDB 논리 연산자" />
+</a></p>
+
+<p>간단한 예를 들어보기로 하죠.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// title 값이 'article01' 이거나, writer 값이 '신사임당' 인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="na">$or</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'title'</span><span class="p">:</span> <span class="s1">'article01'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'writer'</span><span class="p">:</span> <span class="s1">'신사임당'</span><span class="p">}]</span> <span class="p">});</span>  <span class="c1">// 2건 조회</span>
+
+<span class="c1">// writer 값이 '홍길동' 이고 likes 값이 10 미만인 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="na">$and</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'writer'</span><span class="p">:</span> <span class="s1">'홍길동'</span><span class="p">},</span> <span class="p">{</span><span class="s1">'likes'</span><span class="p">:</span> <span class="p">{</span><span class="na">$lt</span><span class="p">:</span> <span class="mi">10</span><span class="p">}}]</span> <span class="p">});</span>  <span class="c1">// 1건 조회</span>
+
+<span class="c1">// 위의 구문은 다음과 같이 작성해도 됩니다.</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="s1">'writer'</span><span class="p">:</span> <span class="s1">'홍길동'</span><span class="p">,</span> <span class="na">likes</span><span class="p">:</span> <span class="p">{</span> <span class="na">$lt</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span> <span class="p">});</span>  <span class="c1">// 1건 조회</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>정규식(<code class="highlighter-rouge">Regular Expression</code>) 연산자</li>
+</ul>
+
+<p><code class="highlighter-rouge">$regex</code> 연산자를 통하여 document를 정규식을 통해 찾을 수 있습니다. 
+단, 정규식에 대한 기본 지식이 있어야 사용이 가능합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// title 값이 'article0'로 시작하고 끝이 1 또는 2로 끝나는 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span> <span class="p">{</span> <span class="s1">'title'</span> <span class="p">:</span> <span class="p">{</span> <span class="na">$regex</span><span class="p">:</span> <span class="sr">/article0</span><span class="se">[</span><span class="sr">1-2</span><span class="se">]</span><span class="sr">/</span> <span class="p">}</span> <span class="p">}</span> <span class="p">)</span>   <span class="c1">// 2건 조회</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">$where</code> 연산자</li>
+</ul>
+
+<p><code class="highlighter-rouge">$where</code> 연산자를 통하여 javascript expression을 사용 할 수 있습니다. 아래의
+예를 보시죠.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// comments field 가 비어있는 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span> <span class="p">{</span> <span class="na">$where</span><span class="p">:</span> <span class="s1">'this.comments.length == 0'</span> <span class="p">}</span> <span class="p">)</span>   <span class="c1">// 1건 조회</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">$elemMatch</code> 연산자</li>
+</ul>
+
+<p><code class="highlighter-rouge">$elemMatch</code> 연산자는 <code class="highlighter-rouge">Embedded Documents</code> 배열을 쿼리할때 사용됩니다. 
+우리 예에서는 <code class="highlighter-rouge">comments</code> 가 <code class="highlighter-rouge">Embedded Document</code>에 속합니다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// comments 중 '장범준'이 작성한 글이 있는 Document 조회</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">articles</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span> <span class="p">{</span> <span class="s1">'comments'</span><span class="p">:</span> <span class="p">{</span> <span class="na">$elemMatch</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'장범준'</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span> <span class="p">)</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">projection</code></li>
+</ul>
+
+<p>End.</p>
+
+<hr />
+
+<p><span class="lecture-reference">Data-Science 강좌는 아래의 책과 사이트를 참조했습니다.
+    조금 더 자세한 사항을 알고 싶으시면 해당 사이트를 방문하세요!!</span></p>
+
+<!--<ul class="lecture-reference">-->
+<!--    <li><a href="http://www.python.org/" target="_blank">Python Official HomePage</a></li>-->
+<!--    <li>점프 투 파이썬 - 이지스 퍼블리싱</li>-->
+<!--    <li>전문가를 위한 파이썬(Fluent Python) - 한빛미디어</li>-->
+<!--    <li>파이썬 웹 프로그래밍 - 한빛미디어</li>-->
+<!--    <li>이미지 출처 : <a href="http://www.freepik.com" target="_blank">Designed by rawpixel.com / Freepik</a></li>-->
+<!--</ul>-->
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 기존에 있던 post하단 이메일 subscribe 삭제 -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/moon9342">moon9342</a></h4>
+                                
+                                    <p><a href="https://www.youtube.com/channel/UCp-MztINXTRVkRGCnqnYNlQ">얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)</a></p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/moon9342">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/blog-cover2.png)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; IT Technical Training &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/data-science/">Data-science</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - Folium</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/data-science/">
+                                
+                                    See all 28 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/python-lecture-python-introduction">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/python-logo.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/python-lecture-python-introduction">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Python</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Python 기초강의(1) - Introduction</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>{% include python-lecture-table-of-contents.html %} --- **영상설명**{: class="subtitle_fontAwesome" } 이번 영상은 `Python` 언어의 개요 및 개발환경설정에 대한 영상입니다. **Python 개요**{: class="subtitle2_fontAwesome" } **Python 개발환경 설정(일반적인 Python 개발환경)**{: class="subtitle2_fontAwesome" } **Python 개발환경 설정(Anaconda를 이용한 Jupyter</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-nosql-database-mongodb-data-modeling">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-nosql-database-mongodb-data-modeling">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">NoSQL Database MongoDB(2) - NoSQL Data Modeling</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://moon9342.github.io/">
+            
+            <span>IT Technical Training</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">NoSQL Database MongoDB(3) - MongoDB Basic Concept</div>
+
+
+
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">이 포스트를 공유하세요 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=NoSQL+Database+MongoDB%283%29+-+MongoDB+Basic+Concept&amp;url=https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-basic-concept"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+
+
+    <!-- floating-header에 이미지 삽입 -->
+<!--
+    <div class="floating-header-share">
+        <img src="assets/images/photo.jpg" width="50">
+    </div>
+-->
+
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://moon9342.github.io/">IT Technical Training</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/">GitHub Pages</a></section>
+                <nav class="site-footer-nav">
+                    <a href="mailto:moon9342@gmail.com">moon9342@gmail.com</a>
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Search IT Technical Training</h1>
+                <p class="subscribe-overlay-description">lunr.js를 이용한 posts 검색 </p>
+                <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" id="searchtext" type="text" name="searchtext"  placeholder="Search..." />
+    </div>
+    <!--<button class="" onclick="myFunc()" id="searchBtn" type="button" ><span>Search</span></button>-->
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+    <!--<script type="text/et-cetera">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>-->
+</span>
+
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113135179-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

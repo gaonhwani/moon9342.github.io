@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>NoSQL Database MongoDB(1) - Introduction</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- Font Awesome CDN 설정 => 느림.. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- JQuery fancybox plugin-->
+    <link rel="stylesheet" href="/assets/built/fancybox.css">
+    <script src="/assets/js/fancybox.js"></script>
+
+    <!-- custom.css -->
+    <link rel="stylesheet" href="/assets/built/custom.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- gist.css -->
+    <link rel="stylesheet" href="/assets/built/better-gist-styles.css">
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--Dl Menu-->
+    <script src="/assets/js/modernizr.custom.js"></script>
+    <script src="/assets/js/jquery.dlmenu.js"></script>
+    <script src="/assets/js/menu_main.js"></script>
+
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-2687024418565562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)" />
+    <link rel="shortcut icon" href="https://moon9342.github.io/assets/built/images/favicon.jpg" type="image/png" />
+    <link rel="canonical" href="https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="IT Technical Training" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NoSQL Database MongoDB(1) - Introduction" />
+    <meta property="og:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta property="og:url" content="https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction" />
+    <meta property="og:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2019-06-02T01:40:00+09:00" />
+    <meta property="article:modified_time" content="2019-06-02T01:40:00+09:00" />
+    <meta property="article:tag" content="Data-science" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NoSQL Database MongoDB(1) - Introduction" />
+    <meta name="twitter:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta name="twitter:url" content="https://moon9342.github.io/" />
+    <meta name="twitter:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="IT Technical Training" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Data-science" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "IT Technical Training",
+        "logo": "https://moon9342.github.io/"
+    },
+    "url": "https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://moon9342.github.io/assets/built/images/digital-marketing.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction"
+    },
+    "description": "Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)"
+}
+    </script>
+
+    <!-- <script type="text/et-cetera" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/et-cetera">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <!-- 사용자 browser 확인 코드 - Chrome이 아니면 경고 메시지 출력 -->
+
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        var _iPhone = false;
+        var _chrome = false;
+        var result = false;
+        if (agent.indexOf("iphone") != -1) {
+            _iPhone = true;
+        }
+        if (agent.indexOf("chrome") != -1) {
+            _chrome = true;
+        }
+
+        if( _iPhone || _chrome ) {
+            result = true;
+        }
+
+        if( !result ) {
+            alert("이 블로그는 Google Chrome Browser에 최적화 되어 있습니다 !!");
+        }
+
+    </script>
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="NoSQL Database MongoDB(1) - Introduction" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="/">IT Technical Training</a>
+            
+        
+        
+            
+<ul class="nav" role="menu">
+<!--    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>-->
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+<!--
+    <li class="nav-data-analysis-article" role="menuitem"><a href="/author/data-analysis/">Data Analysis(R)</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/author/python/">Python</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/tag/jekyll/">Jekyll</a></li>
+    <li class="nav-miscellaneous-article" role="menuitem"><a href="/author/fragmentary-knowledge/">Miscellaneous Article</a></li>
+-->
+<!--
+    <li class="nav-archive" role="menuitem">
+        <a href="/archive.html">All Posts</a>
+    </li>
+-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/jekyll/">Jekyll Blog 생성</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/python/">Python</a>
+    </li>
+    <li class="nav-data-science" role="menuitem">
+        <a href="/tag/data-science/">Data Science</a>
+    </li>
+    <li class="nav-machine-learning" role="menuitem">
+        <a href="/tag/machine-learning/">Machine Learning</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/r/">R 기초강의</a>
+    </li>
+<!--    <li class="nav-python" role="menuitem">-->
+<!--        <a href="/tag/angular/">Angular</a>-->
+<!--    </li>-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/et-cetera/">Et cetera</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+        <a href="/author_archive.html">All Posts</a>
+    </li>
+</ul>
+
+<!-- 아래 내용이 있으면 홈 화면 좌측 상단에 Navigation 버튼이 생성됨.. 굳이 필요없어서 comment 처리 -->
+
+<!--
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+    <button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+        <li><a href="https://moon9342.github.io/">Home</a></li>
+        <li>
+            <a href="#">About</a>
+            <ul class="dl-submenu">
+                <li style="text-align: center">
+                    <img src="https://moon9342.github.io/assets/built/images/photo.jpg" alt="SungHoon Moon photo" class="author-photo">
+                </li>
+                <li>
+                    <h4>SungHoon Moon</h4>
+                    <p>Director of ATGLab. <br>Ph.D. in Computer Science</p>
+                </li>
+                <li><a href="https://moon9342.github.io/about/"><i class="fa fa-external-link"></i><span class="btn btn-inverse"> Learn More</span></a></li>
+                <li>
+                <a href="mailto:moon9342@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+            </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </ul>
+        </li>
+        <li>
+            <a href="#">Posts</a>
+            <ul class="dl-submenu">
+                <li><a href="https://moon9342.github.io/archive">All Posts</a></li>
+                <li><a href="https://moon9342.github.io/author_archive">All Tags</a></li>
+            </ul>
+        </li>
+        
+    </ul>
+</nav>
+-->
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full post tag-front-end ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 1 June 2019"> 1 June 2019</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/data-science/'>DATA-SCIENCE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">NoSQL Database MongoDB(1) - Introduction</h1>
+            </header>
+
+            
+<!--
+            post에 cover image를 표시하지 않게 설정
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)">
+            </figure>
+-->
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Data-Science 강의는 여러 절로 구성되어 있습니다. </span></p>
+<ul class="table-of-contents-list">
+    <li><a href="./data-science-lecture-relational-database-mysql-introduction">Relational Database MySQL(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-setup">Relational Database MySQL(2) - Install 및 환경설정</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-first-execution">Relational Database MySQL(3) - MySQL 전체 운영 실습</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-data-modeling">Relational Database MySQL(4) - Data Modeling</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-utility">Relational Database MySQL(5) - MySQL Utility</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part1">Relational Database MySQL(6) - SQL 기본</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part2">Relational Database MySQL(7) - SQL 고급(1)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part3">Relational Database MySQL(8) - SQL 고급(2)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-table-view">Relational Database MySQL(9) - Table &amp; View</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-1">Relational Database MySQL(10) - Index</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-2">Relational Database MySQL(11) - Index 성능비교</a></li>
+
+    <li><a href="./data-science-lecture-nosql-database-mongodb-introduction">NoSQL Database MongoDB(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-data-modeling">NoSQL Database MongoDB(2) - NoSQL Data Modeling</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-basic-concept">NoSQL Database MongoDB(3) - MongoDB Basic Concept</a></li>
+
+    <li><a href="./data-science-lecture-python-introduction">Python 데이터분석 라이브러리(0) - Introduction</a></li>
+    <li><a href="./data-science-lecture-python-numpy">Python 데이터분석 라이브러리(1) - NumPy</a></li>
+    <li><a href="./data-science-lecture-python-numpy-exercise">Python 데이터분석 라이브러리(2) - NumPy(Exercise)</a></li>
+
+    <li><a href="./data-science-lecture-python-pandas-series">Python 데이터분석 라이브러리(3) - Pandas(Series)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-basic">Python 데이터분석 라이브러리(4) - Pandas(DataFrame 생성)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-indexing">Python 데이터분석 라이브러리(5) - Pandas(DataFrame indexing)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-functions">Python 데이터분석 라이브러리(6) - Pandas(DataFrame functions)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-merge">Python 데이터분석 라이브러리(7) - Pandas(DataFrame merge)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-transform">Python 데이터분석 라이브러리(8) - Pandas(DataFrame 제어)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-group">Python 데이터분석 라이브러리(9) - Pandas(DataFrame Grouping)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-exercise">Python 데이터분석 라이브러리(10) - Pandas(Exercise)</a></li>
+    <li><a href="./data-science-lecture-python-matplotlib">Python 데이터분석 라이브러리(11) - matplotlib</a></li>
+    <li><a href="./data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+    <li><a href="./data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+    <li><a href="./data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - folium</a></li>
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-manipulation">Python 데이터분석 라이브러리(6) - Pandas(DataFrame 조작)</a></li>    -->
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-multi-index">Python 데이터분석 라이브러리(8) - Pandas(DataFrame multi index)</a></li>    -->
+</ul>
+
+<hr />
+
+<p><strong class="subtitle_fontAwesome">Introduction</strong></p>
+
+<p>이번에는 <code class="highlighter-rouge">NoSQL</code> DBMS의 대표격인 <code class="highlighter-rouge">MongoDB</code>에 대해서 알아보도록 하겠습니다.</p>
+
+<p><code class="highlighter-rouge">MongoDB</code>에 대한 내용을 알아보기에 앞서 기본적인 몇가지 용어와 개념부터 알고 넘어가도록 
+하겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Big Data</strong></p>
+
+<p><code class="highlighter-rouge">Big Data</code>는 이제는 아주 흔한 말이 됬습니다. 그런데 이 <code class="highlighter-rouge">Big Data</code>가 과연 무엇일까요? 그냥 단순히 큰 데이터
+인가요?</p>
+
+<p>쉽게 이해하자면 다음과 같이 <code class="highlighter-rouge">Big Data</code>를 말할 수 있습니다.</p>
+
+<blockquote>
+  <p>이전에는 분석이 불가능했지만, IT 기술이 발전하면서 다룰 수 있게 된 방대한 양의 데이터</p>
+</blockquote>
+
+<p>예를 들자면, 휴대폰 통화내역, 실시간 교통량, SNS에서 실시간으로 발생되는 메시지, 인터넷 검색 내역
+등등이 있을 수 있습니다.</p>
+
+<p><code class="highlighter-rouge">Instagram</code>이나 <code class="highlighter-rouge">YouTube</code>에서 하루에 발생하는 데이터량이 어마어마 합니다. 이런 데이터가 월단위,
+연단위로 쌓이게 되면 물리적 이슈 그리고 그 데이터를 분석하기 위한 기술적인 이슈가 발생할 수 밖에 없습니다.</p>
+
+<p>2019년 전 세계 데이터의 총 규모는 33 제타바이트 정도 입니다. 2025년에는 175 제타바이트까지 늘어날
+전망이라고 합니다.</p>
+
+<blockquote>
+  <p>1 제타바이트(zettabyte) = 1000 엑사바이트(exabyte)</p>
+</blockquote>
+
+<blockquote>
+  <p>1 엑사바이트(exabyte) = 미 의회도서관 인쇄물의 10만배 정보량</p>
+</blockquote>
+
+<p>상상할 수 없는 정도의 엄청난 데이터량 입니다.</p>
+
+<p>아래의 그림은 인터넷 기업의 등장과 글로벌 디지털 데이터의 규모를 그래프로 그린 것입니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-introduction-global-data.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-introduction-global-data.png" alt="인터넷 기업의 등장과 데이터 규모의 증가" />
+</a></p>
+
+<p>1995년에 이베이와 아마존이 설립되었고 1998년에 <code class="highlighter-rouge">Google</code>이 설립되었습니다. 빅데이터 관점에서
+보면 이 회사가 시작점이 되었다고 볼 수 있습니다.</p>
+
+<p>그 후에 2004~2006년까지 <code class="highlighter-rouge">Facebook</code>, <code class="highlighter-rouge">Youtube</code>, <code class="highlighter-rouge">Twitter</code>와 같은 서비스가 등장하면서
+데이터량이 늘기 시작했습니다. 하지만 이때까지만 해도 그렇게 큰 데이터 량이 아니었습니다.</p>
+
+<p>그러나 2007년 <code class="highlighter-rouge">iPhone</code>이 처음 등장하면서부터 데이터량이 기하급수적으로 증가하기 시작했습니다.
+왜 그럴까요? 그 이전에는 웹에 대한 트레픽이 대부분 PC를 통해서 이루어졌습니다. 따라서
+트레픽이 발생하는 시간이 대부분 업무시간에 집중되었죠. 하지만 <code class="highlighter-rouge">iPhone</code>을 기점으로 스마트폰이 
+대중화가 되었고 24시간 내내 트레픽이 발생하는 현상이 발생했기 때문에 데이터량이 엄청나게 많이
+증가되기 시작했습니다.</p>
+
+<p>이때부터 기존의 솔루션으로 이 데이터를 처리할 수 없다는 점은 인식하기 시작했고 여러 솔루션들이
+등장해 이 문제를 해결해 나가기 시작했습니다. 아마존과 구글은 2000년대 초반에 이미 이런 문제들을
+예상했고 그에 대한 솔루션들을 만들어 나가기 시작했습니다.</p>
+
+<p>이번에는 빅데이터의 특징에 대해서 알아보도록 하죠. 빅데이터는 다음과 같은 특징을 가지고 있습니다.</p>
+
+<ul>
+  <li>데이터의 양(<code class="highlighter-rouge">Volume</code>)</li>
+  <li>데이터의 생성 속도(<code class="highlighter-rouge">Velocity</code>)</li>
+  <li>데이터 형태의 다양성(<code class="highlighter-rouge">Variety</code>)</li>
+</ul>
+
+<p>일반적으로 <code class="highlighter-rouge">3V</code>라고 불리는데 데이터의 양은 쉽게 알 수 있습니다. 데이터가 많다는 의미입니다. 
+그것보다 더 중요한 것은 그런 많은 데이터가 엄청난 속도로 쏟아져 나온다는 것입니다. 거기에
+기존 솔루션은 정형화된 데이터를 다루는데 초점을 맞추고 있는데 빅 데이터는 그 데이터의 형태가
+상당히 다양하다는 것입니다.</p>
+
+<p>빅데이터는 이름이나 주민번호, 성별, 나이 이런 정형적인 데이터도 중요하게 여기지만 그 보다는</p>
+
+<blockquote>
+  <p>당신이 어디에서 무엇을 하며 어떤 방식을 선호하는가?</p>
+</blockquote>
+
+<p>와 같은 비 정형적인 데이터를 로그를 이용해 기록하고 이를 더 중요하게 여기고 있습니다. 이를
+분석해 더 나은 정보를 추출할 수 있기 때문입니다.</p>
+
+<p>잠깐 기존 데이터와 빅데이터의 차이점을 표를 통해 살펴보도록 하죠.</p>
+
+<p><a href="/assets/built/images/database-mongodb-introduction-data-table.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-introduction-data-table.png" alt="빅데이터의 특징 비교" />
+</a></p>
+
+<p>여기서 한가지 주의해야 할 점은 이 두가지 시스템들은 서로 대응관계가 아니라는 점입니다.
+각자의 시스템이 가지고 있는 단점을 서로 보완해주는 것이라고 이해하는게 맞습니다. 
+다시말하면 전통적인 <code class="highlighter-rouge">RDBMS</code>에서 <code class="highlighter-rouge">NoSQL</code>로 패러다임이 이동하는것이 아니고 둘 모두 상호
+보완적인 관계를 통해 데이터를 더 잘 처리하자는 의미로 보시면 된다는 것입니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">NoSQL의 특징</strong></p>
+
+<p>먼저 <code class="highlighter-rouge">NoSQL</code>이 등장하게 된 배경부터 알아보도록 하겠습니다.</p>
+
+<p>기존 컴퓨팅 시스템은 다음과 같은 특징을 가지고 있습니다.</p>
+
+<ul>
+  <li>기업의 업무를 자동화 하고 효율화 하는 목적</li>
+  <li>기업의 복잡한 데이터를 저장하고 그 데이터 간의 관계를 정의하고 분석하는데 최적화</li>
+  <li>기업의 업무 시스템은 해당 기업의 판매와 생산을 지원하기 위한 것</li>
+  <li>생성되는 데이터량은 한계를 가지고 있음</li>
+</ul>
+
+<p>하지만 2000년대에 들어서면서 세상이 바뀌기 시작했습니다.</p>
+
+<ul>
+  <li>인터넷의 발전과 더불어 SNS 서비스의 활성화.</li>
+  <li>SNS 서비스는 전세계 사용자를 대상으로 한 서비스이기 때문에 대규모 데이터 생성</li>
+  <li>이러한 데이터는 기존 기업 데이터에 비해 매우 단순한 형태를 가짐</li>
+</ul>
+
+<p>즉, 기존의 시스템에서 사용하는 데이터는 복잡한대신 양이 적은 데이터 였다면
+현재 생산되는 데이터는 대규모이고 단순화 되었다는 특징이 있습니다.</p>
+
+<p>결국 기존의 데이터 저장 시스템으로는 커버할 수 없는 여러 가지 한계를 야기했고
+결국에는 새로운 형태의 데이터 저장 기술을 요구하게 되었습니다.</p>
+
+<p>그래서 단순 데이터를 가장 많이 보유하고 이에 대한 대용량 데이터 처리에 대한
+요구가 가장 많았던 <code class="highlighter-rouge">Google</code>과 <code class="highlighter-rouge">Amazon</code>에 의해 <code class="highlighter-rouge">Bigtable</code>과 <code class="highlighter-rouge">Dynamo</code>라는
+논문이 발표되었고 이 두 논문은 새로운 데이터 저장 기술을 만들어 내는 시발점이
+되었습니다. 결국 기존 <code class="highlighter-rouge">Oracle</code>로 대변되던 <code class="highlighter-rouge">RDBMS</code> 중심의 데이터 저장 기술에서
+새로운 데이터 저장 기술인 <code class="highlighter-rouge">NoSQL</code>이 등장하는 계기가 되었습니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">NoSQL</code>은 <code class="highlighter-rouge">Not Only SQL</code>의 약자로 기존 RDBMS의 형태의 관계형 데이터베이스가
+아닌 다른 형태의 데이터 저장 기술을 의미합니다.</p>
+</blockquote>
+
+<p>다시한번 말하지만 <code class="highlighter-rouge">RDBMS</code>와 <code class="highlighter-rouge">NoSQL</code>은 경쟁관계 혹은 대체관계가 아니라 상호보완관계라는 점을 
+인지해야 합니다.</p>
+
+<p>다음은 주요한 <code class="highlighter-rouge">NoSQL</code>의 특징입니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">NoSQL</code>이라고 해서 RDBMS 제품군 처럼 공통된 형식의 데이터 저장방식(Table)과 접근방식(SQL)을
+갖는 제품군이 아니라 <code class="highlighter-rouge">RDBMS</code>와 다른 형태의 데이터 저장 구조를 총칭하는 의미이며 제품에 따라 그 
+특성이 매우 달라서 <code class="highlighter-rouge">NoSQL</code>을 하나의 제품군으로 정의할 수 없습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">RDBMS</code>가 데이터의 관계를 <code class="highlighter-rouge">Foreign Key</code>등으로 정의하고 이를 활용해 <code class="highlighter-rouge">Join</code>등의 관계형 연산을
+하지만 <code class="highlighter-rouge">NoSQL</code>은 데이터 간의 관계를 정의하지 않습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">RDBMS</code>의 복잡도와 용량 한계를 극복하기 위한 목적으로 등장한 만큼, 페타 바이트급의 대용량 데이터를
+저장할 수 있습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">NoSQL</code>은 기존의 <code class="highlighter-rouge">RDBMS</code>처럼 하나의 고성능 머신에 데이터를 저장하는 것이 아니라 일반적인 서버 수십,
+수백대를 연결해 데이터를 저장 및 처리하는 구조를 가집니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>분산형 구조를 통해 데이터를 여러 대의 서버에 분산해 저장하기 때문에, 데이터의 분실과 장애발생에 상대적으로
+견고한 특성을 가집니다.</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">NoSQL</code>은 <code class="highlighter-rouge">RDBMS</code>와는 다르게 테이블의 스키마가 유동적입니다.</p>
+</blockquote>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">NoSQL의 종류</strong></p>
+
+<p><code class="highlighter-rouge">NoSQL</code>은 저장방식에 따라서 몇가지 종류로 나뉘어집니다.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Key/Value Store</code></li>
+</ul>
+
+<p>대부분의 NoSQL은 <code class="highlighter-rouge">Key/Value</code>의 개념을 가지고 있습니다. <code class="highlighter-rouge">Unique</code>한 key에 하나의 value를
+가지고 있는 형태이고 <code class="highlighter-rouge">put(key,value)</code>, <code class="highlighter-rouge">get(key)</code> 형태의 API를 사용합니다. 가장 대표적인
+솔루션으로는 <code class="highlighter-rouge">Redis</code>가 있습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-introduction-key-value-store.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-introduction-key-value-store.png" alt="NoSQL 종류 - Key/Value Store" />
+</a></p>
+
+<ul>
+  <li><code class="highlighter-rouge">Oredered Key/Value Store</code></li>
+</ul>
+
+<p>다른말로 <code class="highlighter-rouge">BigTable-style Database</code>라고 합니다. 
+데이터가 내부적으로 Key를 순서로 <code class="highlighter-rouge">Sorting</code> 되어 저장되는 구조입니다. 아래 그림처럼 Key안에
+<code class="highlighter-rouge">(column:value)</code> 조합으로 된 여러개의 필드를 가지는 구조입니다. 단순 <code class="highlighter-rouge">Key/Value Store</code>에서
+조금 더 발전된 형태라고 볼 수 있습니다. 대표적인 솔루션으로 <code class="highlighter-rouge">Apache Hbase</code>, <code class="highlighter-rouge">Apache Cassandra</code>가 있습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-introduction-ordered-key-value-store.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-introduction-ordered-key-value-store.png" alt="NoSQL 종류 - Ordered Key/Value Store" />
+</a></p>
+
+<ul>
+  <li><code class="highlighter-rouge">Document Key/Value Store</code></li>
+</ul>
+
+<p>다른말로 <code class="highlighter-rouge">Document Database</code>라고 합니다. 
+<code class="highlighter-rouge">Key/Value Store</code>의 확장된 가장 진보한 형태입니다. 저장되는 Value의 데이터 타입으로 
+<code class="highlighter-rouge">Document</code>라는 구조화된 데이터 타입(<code class="highlighter-rouge">JSON</code>, <code class="highlighter-rouge">XML</code>, <code class="highlighter-rouge">YAML</code>)을 사용합니다. 
+복잡한 계층 구조의 표현이 가능하며 제품에 따라서 추가적인 기능(<code class="highlighter-rouge">Sorting</code>, <code class="highlighter-rouge">Join</code>)지원이 
+되고 있습니다. 대표적인 솔루션으로 <code class="highlighter-rouge">MongoDB</code>가 있습니다.</p>
+
+<p><a href="/assets/built/images/database-mongodb-introduction-document-key-value-store.png" data-fancybox="">
+    <img src="/assets/built/images/database-mongodb-introduction-document-key-value-store.png" alt="NoSQL 종류 - Document Key/Value Store" />
+</a></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">NoSQL의 장단점</strong></p>
+
+<p>먼저 Modeling 관점에서 <code class="highlighter-rouge">Relational Data Modeling</code>과 <code class="highlighter-rouge">NoSQL Data Modeling</code>의
+특징부터 알아보기로 하겠습니다.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Relational Data Modeling</code></li>
+</ul>
+
+<blockquote>
+  <p>전형적으로 가용한 데이터 구조에 기반하고 있습니다. 즉, 내가 가지고 있는 데이터가 무엇인가? 라는
+점이 가장 중요합니다. 내가 사용할 수 있는 도구는 정해져있기 때문에 사용자의 모든 요구를
+반영하기는 쉽지 않은 구조입니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>그래서 데이터 모델을 먼저 정의한 후 어플리케이션에 맞는 쿼리를 개발하는 식으로 진행</p>
+</blockquote>
+
+<blockquote>
+  <p>저장하고자하는 도메인 모델 분석 -&gt; 개체간의 관계(relation) 식별 -&gt; 테이블 추출 -&gt;
+테이블을 이용한 쿼리 구현 순으로 진행합니다.</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">NoSQL Data Modeling</code></li>
+</ul>
+
+<blockquote>
+  <p>어플리케이션의 특징적인 데이터 접근 패턴에 따라 모델링을 합니다. 쉽게 말하면 고객의 요구사항이
+무엇인가에 더 집중하는 방식입니다. 기존 관계형은 내가 가지고 있는 답(데이터)에 근거해서 고객의 
+요구사항을 받아들이는 구조였는데 NoSQL은 고객이 원하는 답이 무엇인지를 먼저 파악하고 그 답을
+제공해 줄 수 있는 데이터는 어떻게 모델링을 해야 할지를 고민하고 결정해야 합니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>어플리케이션의 필요한 쿼리와 성능을 먼저 정의한 후 요구사항에 부합되도록 데이터 모델을 구성</p>
+</blockquote>
+
+<blockquote>
+  <p>도메인 모델 분석 -&gt; 쿼리 결과 도출 -&gt; 테이블(데이터 저장 모델) 설계 순으로 진행합니다.</p>
+</blockquote>
+
+<p>따라서, <code class="highlighter-rouge">NoSQL</code> 모델링은 <code class="highlighter-rouge">Relational</code> 모델링보다 더 깊은 데이터 구조 및 알고리즘에 대한
+이해가 필요하고 이에 따른 물리적인(디스크)인 디자인도 같이 병행해야 합니다. 대부분의 <code class="highlighter-rouge">NoSQL</code>
+제품들은 보안에 취약하기 때문에 방화벽과 같은 별도의 보안체계를 마련해야 합니다.</p>
+
+<p>이번에는 <code class="highlighter-rouge">RDBMS</code>의 특징과 <code class="highlighter-rouge">NoSQL</code>의 특징을 간단하게 비교해서 보기로 하죠.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">RDBMS</code>의 특징</li>
+</ul>
+
+<blockquote>
+  <p>범용적이고 고성능</p>
+</blockquote>
+
+<blockquote>
+  <p>대부분의 경우 관계형 데이터베이스를 사용하는 것이 안정적</p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">Transaction</code>으로 데이터의 일관성을 보장받고 데이터의 불일치를 방지할 수 있다.</p>
+</blockquote>
+
+<blockquote>
+  <p>정규화를 전제로 하고 있기 때문에 업데이트 시 비용이 적게 든다</p>
+</blockquote>
+
+<blockquote>
+  <p>데이터베이스 설계 당시부터 불필요한 중복이 삭제된다.</p>
+</blockquote>
+
+<blockquote>
+  <p>복잡한 형태의 쿼리도 가능하며 이미 성숙한 기술이다.</p>
+</blockquote>
+
+<blockquote>
+  <p>대량의 데이터 입력 처리에는 한계를 가진다.</p>
+</blockquote>
+
+<blockquote>
+  <p>테이블의 인덱스 생성이나 스키마를 변경할 때 많은 오버헤드가 발생한다.</p>
+</blockquote>
+
+<blockquote>
+  <p>개발과 운영시 컬럼을 확정짓기 어려운 경우 사용하기 쉽지 않다.</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">NoSQL</code>의 특징</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">NoSQL</code>은 범용성 보다는 특정 용도로 특화되어 있기 때문에 각 NoSQL 솔루션의 특징을 알 필요가 있다.</p>
+</blockquote>
+
+<blockquote>
+  <p>기본적으로 <code class="highlighter-rouge">NoSQL</code>의 <code class="highlighter-rouge">Join</code> 연산은 대부분 불가능.</p>
+</blockquote>
+
+<blockquote>
+  <p>데이터를 여러 서버에 분산시키기에 유리하며 배열 형식의 데이터를 빠르게 처리하고 많은 데이터를
+저장할 때 유리</p>
+</blockquote>
+
+<blockquote>
+  <p>아직 새로운 기술로 운영 노하우가 적으편이며 버그가 상대적으로 많이 남아있는 상태</p>
+</blockquote>
+
+<p>End.</p>
+
+<hr />
+
+<p><span class="lecture-reference">Data-Science 강좌는 아래의 책과 사이트를 참조했습니다.
+    조금 더 자세한 사항을 알고 싶으시면 해당 사이트를 방문하세요!!</span></p>
+
+<!--<ul class="lecture-reference">-->
+<!--    <li><a href="http://www.python.org/" target="_blank">Python Official HomePage</a></li>-->
+<!--    <li>점프 투 파이썬 - 이지스 퍼블리싱</li>-->
+<!--    <li>전문가를 위한 파이썬(Fluent Python) - 한빛미디어</li>-->
+<!--    <li>파이썬 웹 프로그래밍 - 한빛미디어</li>-->
+<!--    <li>이미지 출처 : <a href="http://www.freepik.com" target="_blank">Designed by rawpixel.com / Freepik</a></li>-->
+<!--</ul>-->
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 기존에 있던 post하단 이메일 subscribe 삭제 -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/moon9342">moon9342</a></h4>
+                                
+                                    <p><a href="https://www.youtube.com/channel/UCp-MztINXTRVkRGCnqnYNlQ">얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)</a></p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/moon9342">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/blog-cover2.png)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; IT Technical Training &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/data-science/">Data-science</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - Folium</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/data-science/">
+                                
+                                    See all 28 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-nosql-database-mongodb-data-modeling">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-nosql-database-mongodb-data-modeling">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">NoSQL Database MongoDB(2) - NoSQL Data Modeling</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>{% include data-science-lecture-table-of-contents.html %} --- **NoSQL Data Modeling**{: class="subtitle_fontAwesome" } 이번에는 `NoSQL`의 데이터 모델링 개념과 특징을 알아보고 주요 `NoSQL` 데이터 모델링 기법에 대해서 살펴보겠습니다. --- **Denomalization**{: class="subtitle2_fontAwesome" } 관계형 데이터베이스와는 다르게 `NoSQL`은 비정규화를</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-relational-database-mysql-index-2">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-relational-database-mysql-index-2">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Relational Database MySQL(11) - Index 성능비교</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://moon9342.github.io/">
+            
+            <span>IT Technical Training</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">NoSQL Database MongoDB(1) - Introduction</div>
+
+
+
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">이 포스트를 공유하세요 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=NoSQL+Database+MongoDB%281%29+-+Introduction&amp;url=https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://moon9342.github.io/data-science-lecture-nosql-database-mongodb-introduction"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+
+
+    <!-- floating-header에 이미지 삽입 -->
+<!--
+    <div class="floating-header-share">
+        <img src="assets/images/photo.jpg" width="50">
+    </div>
+-->
+
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://moon9342.github.io/">IT Technical Training</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/">GitHub Pages</a></section>
+                <nav class="site-footer-nav">
+                    <a href="mailto:moon9342@gmail.com">moon9342@gmail.com</a>
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Search IT Technical Training</h1>
+                <p class="subscribe-overlay-description">lunr.js를 이용한 posts 검색 </p>
+                <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" id="searchtext" type="text" name="searchtext"  placeholder="Search..." />
+    </div>
+    <!--<button class="" onclick="myFunc()" id="searchBtn" type="button" ><span>Search</span></button>-->
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+    <!--<script type="text/et-cetera">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>-->
+</span>
+
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113135179-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

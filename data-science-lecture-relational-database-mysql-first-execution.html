@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Relational Database MySQL(3) - MySQL 전체 운영 실습</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- Font Awesome CDN 설정 => 느림.. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- JQuery fancybox plugin-->
+    <link rel="stylesheet" href="/assets/built/fancybox.css">
+    <script src="/assets/js/fancybox.js"></script>
+
+    <!-- custom.css -->
+    <link rel="stylesheet" href="/assets/built/custom.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- gist.css -->
+    <link rel="stylesheet" href="/assets/built/better-gist-styles.css">
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--Dl Menu-->
+    <script src="/assets/js/modernizr.custom.js"></script>
+    <script src="/assets/js/jquery.dlmenu.js"></script>
+    <script src="/assets/js/menu_main.js"></script>
+
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-2687024418565562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)" />
+    <link rel="shortcut icon" href="https://moon9342.github.io/assets/built/images/favicon.jpg" type="image/png" />
+    <link rel="canonical" href="https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="IT Technical Training" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Relational Database MySQL(3) - MySQL 전체 운영 실습" />
+    <meta property="og:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta property="og:url" content="https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution" />
+    <meta property="og:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2019-01-04T01:40:00+09:00" />
+    <meta property="article:modified_time" content="2019-01-04T01:40:00+09:00" />
+    <meta property="article:tag" content="Data-science" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Relational Database MySQL(3) - MySQL 전체 운영 실습" />
+    <meta name="twitter:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta name="twitter:url" content="https://moon9342.github.io/" />
+    <meta name="twitter:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="IT Technical Training" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Data-science" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "IT Technical Training",
+        "logo": "https://moon9342.github.io/"
+    },
+    "url": "https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://moon9342.github.io/assets/built/images/digital-marketing.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution"
+    },
+    "description": "Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)"
+}
+    </script>
+
+    <!-- <script type="text/et-cetera" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/et-cetera">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <!-- 사용자 browser 확인 코드 - Chrome이 아니면 경고 메시지 출력 -->
+
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        var _iPhone = false;
+        var _chrome = false;
+        var result = false;
+        if (agent.indexOf("iphone") != -1) {
+            _iPhone = true;
+        }
+        if (agent.indexOf("chrome") != -1) {
+            _chrome = true;
+        }
+
+        if( _iPhone || _chrome ) {
+            result = true;
+        }
+
+        if( !result ) {
+            alert("이 블로그는 Google Chrome Browser에 최적화 되어 있습니다 !!");
+        }
+
+    </script>
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Relational Database MySQL(3) - MySQL 전체 운영 실습" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="/">IT Technical Training</a>
+            
+        
+        
+            
+<ul class="nav" role="menu">
+<!--    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>-->
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+<!--
+    <li class="nav-data-analysis-article" role="menuitem"><a href="/author/data-analysis/">Data Analysis(R)</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/author/python/">Python</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/tag/jekyll/">Jekyll</a></li>
+    <li class="nav-miscellaneous-article" role="menuitem"><a href="/author/fragmentary-knowledge/">Miscellaneous Article</a></li>
+-->
+<!--
+    <li class="nav-archive" role="menuitem">
+        <a href="/archive.html">All Posts</a>
+    </li>
+-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/jekyll/">Jekyll Blog 생성</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/python/">Python</a>
+    </li>
+    <li class="nav-data-science" role="menuitem">
+        <a href="/tag/data-science/">Data Science</a>
+    </li>
+    <li class="nav-machine-learning" role="menuitem">
+        <a href="/tag/machine-learning/">Machine Learning</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/r/">R 기초강의</a>
+    </li>
+<!--    <li class="nav-python" role="menuitem">-->
+<!--        <a href="/tag/angular/">Angular</a>-->
+<!--    </li>-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/et-cetera/">Et cetera</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+        <a href="/author_archive.html">All Posts</a>
+    </li>
+</ul>
+
+<!-- 아래 내용이 있으면 홈 화면 좌측 상단에 Navigation 버튼이 생성됨.. 굳이 필요없어서 comment 처리 -->
+
+<!--
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+    <button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+        <li><a href="https://moon9342.github.io/">Home</a></li>
+        <li>
+            <a href="#">About</a>
+            <ul class="dl-submenu">
+                <li style="text-align: center">
+                    <img src="https://moon9342.github.io/assets/built/images/photo.jpg" alt="SungHoon Moon photo" class="author-photo">
+                </li>
+                <li>
+                    <h4>SungHoon Moon</h4>
+                    <p>Director of ATGLab. <br>Ph.D. in Computer Science</p>
+                </li>
+                <li><a href="https://moon9342.github.io/about/"><i class="fa fa-external-link"></i><span class="btn btn-inverse"> Learn More</span></a></li>
+                <li>
+                <a href="mailto:moon9342@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+            </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </ul>
+        </li>
+        <li>
+            <a href="#">Posts</a>
+            <ul class="dl-submenu">
+                <li><a href="https://moon9342.github.io/archive">All Posts</a></li>
+                <li><a href="https://moon9342.github.io/author_archive">All Tags</a></li>
+            </ul>
+        </li>
+        
+    </ul>
+</nav>
+-->
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full post tag-front-end ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 3 January 2019"> 3 January 2019</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/data-science/'>DATA-SCIENCE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Relational Database MySQL(3) - MySQL 전체 운영 실습</h1>
+            </header>
+
+            
+<!--
+            post에 cover image를 표시하지 않게 설정
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)">
+            </figure>
+-->
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Data-Science 강의는 여러 절로 구성되어 있습니다. </span></p>
+<ul class="table-of-contents-list">
+    <li><a href="./data-science-lecture-relational-database-mysql-introduction">Relational Database MySQL(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-setup">Relational Database MySQL(2) - Install 및 환경설정</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-first-execution">Relational Database MySQL(3) - MySQL 전체 운영 실습</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-data-modeling">Relational Database MySQL(4) - Data Modeling</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-utility">Relational Database MySQL(5) - MySQL Utility</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part1">Relational Database MySQL(6) - SQL 기본</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part2">Relational Database MySQL(7) - SQL 고급(1)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part3">Relational Database MySQL(8) - SQL 고급(2)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-table-view">Relational Database MySQL(9) - Table &amp; View</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-1">Relational Database MySQL(10) - Index</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-2">Relational Database MySQL(11) - Index 성능비교</a></li>
+
+    <li><a href="./data-science-lecture-nosql-database-mongodb-introduction">NoSQL Database MongoDB(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-data-modeling">NoSQL Database MongoDB(2) - NoSQL Data Modeling</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-basic-concept">NoSQL Database MongoDB(3) - MongoDB Basic Concept</a></li>
+
+    <li><a href="./data-science-lecture-python-introduction">Python 데이터분석 라이브러리(0) - Introduction</a></li>
+    <li><a href="./data-science-lecture-python-numpy">Python 데이터분석 라이브러리(1) - NumPy</a></li>
+    <li><a href="./data-science-lecture-python-numpy-exercise">Python 데이터분석 라이브러리(2) - NumPy(Exercise)</a></li>
+
+    <li><a href="./data-science-lecture-python-pandas-series">Python 데이터분석 라이브러리(3) - Pandas(Series)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-basic">Python 데이터분석 라이브러리(4) - Pandas(DataFrame 생성)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-indexing">Python 데이터분석 라이브러리(5) - Pandas(DataFrame indexing)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-functions">Python 데이터분석 라이브러리(6) - Pandas(DataFrame functions)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-merge">Python 데이터분석 라이브러리(7) - Pandas(DataFrame merge)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-transform">Python 데이터분석 라이브러리(8) - Pandas(DataFrame 제어)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-group">Python 데이터분석 라이브러리(9) - Pandas(DataFrame Grouping)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-exercise">Python 데이터분석 라이브러리(10) - Pandas(Exercise)</a></li>
+    <li><a href="./data-science-lecture-python-matplotlib">Python 데이터분석 라이브러리(11) - matplotlib</a></li>
+    <li><a href="./data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+    <li><a href="./data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+    <li><a href="./data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - folium</a></li>
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-manipulation">Python 데이터분석 라이브러리(6) - Pandas(DataFrame 조작)</a></li>    -->
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-multi-index">Python 데이터분석 라이브러리(8) - Pandas(DataFrame multi index)</a></li>    -->
+</ul>
+
+<hr />
+
+<p><strong class="subtitle_fontAwesome">시스템 구축 절차</strong></p>
+
+<p>정보시스템을 구축하기 위해서는 기본적으로 분석, 설계, 구현, 테스트, 유지보수의 5단계를
+거치게 됩니다.</p>
+
+<p>이 중 분석 단계는 프로젝트의 가장 첫번째 단계로 <code class="highlighter-rouge">시스템 분석</code> 혹은 <code class="highlighter-rouge">요구사항분석</code> 이라고
+합니다. 이 단계에서는 우리가 무엇(<code class="highlighter-rouge">what</code>)을 할 것인지를 결정합니다.</p>
+
+<p>그 다음에 진행되는 것은 설계 단계입니다. 주로 <code class="highlighter-rouge">시스템 설계</code> 혹은 <code class="highlighter-rouge">프로그램 설계</code>라고
+부르며 우리가 구축하고자 하는 시스템을 어떻게(<code class="highlighter-rouge">how</code>) 구현할 것인지를 결정합니다.</p>
+
+<p>이 과정이 끝나면 결과로 나온 문서들을 프로그래머에게 넘겨서 실제 프로그램 구현에 들어가게
+됩니다. 따라서 시스템 설계가 끝나면 가장 큰 작업이 끝난 것으로 간주하고 대부분의 프로젝트는
+이 분석과 설계의 과정이 전체 공정의 50% 이상을 차지하게 됩니다.</p>
+
+<p>그리고 이 분석과 설계 과정 중에서 가장 중요한 과정중의 하나가 바로 <code class="highlighter-rouge">Database Modeling</code>입니다.</p>
+
+<p><code class="highlighter-rouge">Database Modeling</code>이란 현실 세계에서 사용되는 데이터를 Database에 어떻게 
+옮겨 놓을 것인지를 결정하는 과정이라고 쉽게 이해하시면 됩니다.</p>
+
+<p>자 그럼 간단하게 인터넷 쇼핑몰의 데이터베이스 모델링 결과를 한번 살펴보고 
+각 용어들부터 천천히 알아보도록 하겠습니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-db-modeling.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-db-modeling.png" alt="Database Modeling" />
+</a></p>
+
+<p><code class="highlighter-rouge">Table</code> : 회원이나 제품의 데이터를 입력하기 위해, 표 형태로 표현한 것을 의미합니다.</p>
+
+<p><code class="highlighter-rouge">Database</code> : 테이블이 저장되는 저장소를 의미합니다. DBMS는 여러개의 Database를 유지할
+수 있으며 각 Database는 서로 다른 고유한 이름을 가지고 있어야 합니다.</p>
+
+<p><code class="highlighter-rouge">DBMS</code> : 데이터베이스를 관리하는 시스템 혹은 소프트웨어의 집합을 의미합니다.</p>
+
+<p><code class="highlighter-rouge">Column</code> : 열 혹은 필드라고도 합니다. 각 테이블은 열로 구성됩니다.</p>
+
+<p><code class="highlighter-rouge">Column name</code> : 각 열을 구분하기 위한 이름입니다. 열 이름은 하나의 테이블 내에서는 중복이
+허용되지 않습니다.</p>
+
+<p><code class="highlighter-rouge">Data Type</code> : 열의 데이터 형식을 의미합니다. 숫자나 문자같은 것을 의미합니다.</p>
+
+<p><code class="highlighter-rouge">Row</code> : 행 혹은 레코드라고 합니다. 실질적인 데이터를 의미합니다.</p>
+
+<p><code class="highlighter-rouge">Primary Key</code> : 기본키라고 불리는 column은 각각의 행을 유일하게 구분하기 위해 
+유니크한 값을 가지는 열을 의미합니다. (우리가 지정해서 사용합니다.) 또한 Primary Key는
+각 테이블에 최대 1개만 존재할 수 있습니다.</p>
+
+<p><code class="highlighter-rouge">Foreign Key</code> : 두 개의 테이블의 관계를 맺어주는 역할을 수행하는 column을 의미합니다.
+(이 역시 우리가 지정해서 사용합니다.)</p>
+
+<p>자 기본적인 용어들에 대해서 정리해보았으니 이제 실습을 통해 데이터베이스 사용에 대해서
+알아보도록 하겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Database 생성</strong></p>
+
+<p><code class="highlighter-rouge">Workbench</code>를 실행시킨 후 Local MySQL Server에 접속합니다.</p>
+
+<p><code class="highlighter-rouge">Navigator</code>창의 아래쪽에 <code class="highlighter-rouge">Schemas</code>라는 탭을 클릭합니다.</p>
+
+<p>원래 <code class="highlighter-rouge">Database Schema</code>라는 용어는 Database에서 data의 구조와 data의 표현방법,
+data간의 관계를 형식 언어로 정의한 구조를 의미합니다. 총 3개의 layer로 구성되고 각각의
+schema의 의미는 다음과 같습니다.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">External Schema</code> : 프로그래머나 사용자의 입장에서 database의 모습을 의미합니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Conceptual Schema</code> : database안의 모든 data에 대한 구조를 논리적으로 정의한 것을
+의미합니다.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Internal Schema</code> : database의 물리적 저장형태를 기술하는 것을 의미합니다.</p>
+  </li>
+</ul>
+
+<p>이렇게 <code class="highlighter-rouge">Schema</code>라는 용어는 <code class="highlighter-rouge">Database</code>라는 용어와 본래 다른 뜻이지만 
+MySQL에서는 이 Schema라는 용어를 Database와 동일한 개념으로 사용합니다.</p>
+
+<p>여하간 Schema tab에서 마우스 오른쪽 팝업 메뉴를 이용해 <code class="highlighter-rouge">Create Schema</code>를 실행합니다.
+Schema의 이름을 <code class="highlighter-rouge">shopdb</code>로 지정하고 apply를 클릭하면 창이 열리면서 사용되는 SQL문을 
+확인할 수 있습니다.</p>
+
+<p>일반적으로 이렇게 GUI 툴을 이용해서 사용하는것 보다는 SQL명령어를 이용해서 Database를
+제어합니다. 우리의 강의도 앞으로 가능한 SQL명령을 이용해서 제어하도록 하겠습니다.</p>
+
+<p><code class="highlighter-rouge">shopdb</code>라는 데이터베이스가 생성된 것을 확인했으니 이제 data를 저장하는 구조인 <code class="highlighter-rouge">table</code>을
+생성할 차례입니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Table 생성</strong></p>
+
+<p>우리는 2개의 Table을 생성할 것이고 다음과 같은 내용으로 생성합니다.</p>
+
+<ul>
+  <li>회원 테이블(<code class="highlighter-rouge">memberTBL</code>)</li>
+</ul>
+
+<p><a href="/assets/built/images/database-mysql-member-table.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-member-table.png" alt="member table" />
+</a></p>
+
+<ul>
+  <li>제품 테이블(<code class="highlighter-rouge">productTBL</code>)</li>
+</ul>
+
+<p><a href="/assets/built/images/database-mysql-product-table.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-product-table.png" alt="product table" />
+</a></p>
+
+<p>위의 내용대로 <code class="highlighter-rouge">table</code>을 생성합니다. <code class="highlighter-rouge">shopdb</code>를 확장해 <code class="highlighter-rouge">Tables</code>를 선택한 후 
+마우스 오른쪽 팝업 메뉴를 이용해 <code class="highlighter-rouge">Create Table</code> 메뉴를 선택한 후 다음 그림과 같이
+column을 설정합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-member-table-create.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-member-table-create.png" alt="member table - create" />
+</a></p>
+
+<p>한가지 기억할것은 <code class="highlighter-rouge">MySQL</code>은 기본적으로 table이름, column이름등을 모두 <strong>소문자</strong>로 처리한다는 
+것입니다. 위의 예에서 우리가 대문자로 입력한다 하더라도 내부적으로는 모두 소문자로 변경되어 처리되는걸
+기억하도록 하죠. 대문자를 사용한 이유는 Readability를 높이기 위함입니다.</p>
+
+<p>이번엔 다음 그림과 같이 <code class="highlighter-rouge">productTBL</code>을 생성하도록 하겠습니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-product-table-create.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-product-table-create.png" alt="product table - create" />
+</a></p>
+
+<p>테이블이 생성되었으니 이제 샘플데이터를 입력해보도록 하겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">데이터 입력</strong></p>
+
+<p>만들어진 <code class="highlighter-rouge">memberTBL</code>을 선택한 후 마우스 오른쪽 팝업 메뉴를 이용해 <code class="highlighter-rouge">Select Rows - Limits 1000</code>을
+선택한 후 <code class="highlighter-rouge">Result Grid</code>에서 데이터를 입력합니다. 입력을 다 하면 apply를 눌러 적용합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-member-table-insert.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-member-table-insert.png" alt="member table - row insert" />
+</a></p>
+
+<p>동일한 방식으로 <code class="highlighter-rouge">productTBL</code>을 선택한 후 아래 그림 처럼 데이터를 입력합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-product-table-insert.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-product-table-insert.png" alt="product table - row insert" />
+</a></p>
+
+<p>데이터 입력이 끝났으니 이제 데이터를 활용하는 방법에 대해서 알아보겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">데이터 활용</strong></p>
+
+<p>일반적으로 데이터를 활용한다는 의미는 SQL <code class="highlighter-rouge">SELECT</code> 구문을 이용해 검색하는 것을 의미합니다.</p>
+
+<p><code class="highlighter-rouge">Workbench</code> 상단 제일 왼쪽의 메뉴를 이용해 새로운 SQL Tab을 생성합니다. <code class="highlighter-rouge">Schemas</code>에서
+특정 database를 더블클릭하면 글자 색상이 진하게 변하는데 앞으로 query창에 입력하는 SQL이
+선택된 database에 적용된다는 것을 의미합니다.</p>
+
+<p>자 그럼 몇가지 SQL문을 실습해보죠.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT * FROM productTBL;</code></p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT memberName, memberAddress FROM memberTBL;</code></p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT * FROM memberTBL WHERE memberName='아이유';</code></p>
+</blockquote>
+
+<p>SQL의 주석은 <code class="highlighter-rouge">--</code> 입니다. 반드시 <code class="highlighter-rouge">--</code> 뒤에 공백이 하나 있어야 주석으로 인식된다는
+것도 같이 기억해야 합니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">-- 주석입니다.!!</code></p>
+</blockquote>
+
+<p>table이름에 공백을 포함해도 되지만 이런 경우는 일반적인 상황은 아닙니다.</p>
+
+<p>아주 간단하게 <code class="highlighter-rouge">SELECT</code> 구문을 살펴봤는데 자세한 사항은 뒤쪽에서 다시 한번 다루기로
+하겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Index(인덱스)</strong></p>
+
+<p><code class="highlighter-rouge">Index</code>는 대부분의 책 뒤쪽에 위치한 찾아보기(색인)과 같은 개념입니다. 즉, 책의 내용 중
+특정 단어를 찾고자 할 때 책의 첫페이지부터 마지막까지 전부 찾아보는 것보다는 책 뒤의
+찾아보기를 먼저 보고 색인에 나와있는 페이지로 바로 찾아가는게 훨씬 빠르다는 개념을 database에
+구현해 놓은 것이라고 생각하시면 됩니다.</p>
+
+<p>데이터가 얼마 없을때는 Index를 이용하지 않아도 크게 느려지지 않지만 데이터가 많아지게되면
+Index를 사용하지 않고 데이터를 검색하는데 상당히 오랜 시간이 걸리게 됩니다. 이런 Index를
+적절히 적용하고 사용하고 있는지가 database 시스템의 성능을 크게 좌우하게 됩니다.</p>
+
+<p><code class="highlighter-rouge">Index</code>는 table의 column 단위에 생성됩니다. (복합 index도 존재합니다.) table에 
+<code class="highlighter-rouge">primary key</code>를 설정하면 자동으로 index가 생성다는 것도 기억해 두죠.</p>
+
+<p>아주 간단하게 <code class="highlighter-rouge">index</code>의 효과를 살펴보도록 하겠습니다. 아래의 query문을 이용해 새로운
+table을 하나 생성합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">create</span> <span class="k">table</span> <span class="n">indexTBL</span> <span class="p">(</span>
+    <span class="n">first_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+    <span class="n">last_name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
+    <span class="n">hire_date</span> <span class="n">date</span>
+<span class="p">);</span>
+ 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">indexTBL</span>
+    <span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">hire_date</span>
+    <span class="k">FROM</span> <span class="n">employees</span><span class="p">.</span><span class="n">employees</span>
+    <span class="k">LIMIT</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="k">SELECt</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">indexTBL</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">employees</code> database 안에 있는 <code class="highlighter-rouge">employees</code> table에서 500개의 record를 select해서
+<code class="highlighter-rouge">indexTBL</code> table에 삽입하는 코드입니다. 결과를 확인해보면 총 500개의 record가 정상적으로
+삽입된 것을 확인할 수 있습니다.</p>
+
+<p>현재는 <code class="highlighter-rouge">indexTBL</code> table에 <code class="highlighter-rouge">index</code>가 설정되지 않은 상태입니다.</p>
+
+<p><code class="highlighter-rouge">indexTBL</code> table에서 first_name이 Mary인 사람을 조회해 보도록 하죠</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT * FROM indexTBL WHERE first_name='Mary';</code></p>
+</blockquote>
+
+<p>실행 시킨 후 아래 그림처럼 <code class="highlighter-rouge">Execution Plan</code> 항목을 확인합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-no-index-select.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-no-index-select.png" alt="no index select" />
+</a></p>
+
+<p><code class="highlighter-rouge">Full Table Scan</code>이라는 글자가 보입니다. 즉, index를 사용하지 않고 table 전체를
+검색했다는 의미입니다. 500건을 모두 읽어서 1개의 결과를 찾아난거죠. 데이터가 많았으면
+아마 시간이 더 걸리겠죠.</p>
+
+<p>다음의 SQL을 실행해서 index를 생성한 후 SELECT를 해 보도록 하겠습니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">CREATE INDEX idx_indexTBL_firstname ON indexTBL(first_name);</code></p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT * FROM indexTBL WHERE first_name='Mary';</code></p>
+</blockquote>
+
+<p>다음의 그림처럼 결과는 동일하지만 내부적인 작동은 index를 생성하기 전과 차이가 있습니다.
+<code class="highlighter-rouge">Non-Unique Key Lookup</code>이라고 나오는데 이는 index를 사용해서 처리했다는 의미입니다.
+지금은 데이터가 얼마 되지 않아서 체감이 안되는데 데이터가 많아지면 실제로 체감이 되겠죠.</p>
+
+<p><a href="/assets/built/images/database-mysql-index-select.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-index-select.png" alt="index select" />
+</a></p>
+
+<p>이런 <code class="highlighter-rouge">index</code>는 당연히 필요하고 잘 사용하면 좋은 성능을 끌어낼 수 있지만 잘못 사용하거나
+남용하게 되면 오히려 더 않좋은 결과를 가져올 수 있습니다. 자세한 내용은 뒤에서 다시
+살펴보도록 하겠습니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">View(뷰)</strong></p>
+
+<p><code class="highlighter-rouge">View</code>는 가상의 table이라고 생각하시면 됩니다. 사용하는 사람의 입장에서는 table과 동일하게
+보이지만 실제 View는 데이터를 가지고 있지 않습니다. 진짜 table에 <code class="highlighter-rouge">Lnik</code>된 개념이라고 생각하시면
+됩니다. 따라서 View를 SELECT하면 결국 진짜 table을 조회하는 것과 동일한 결과를 얻을 수 
+있습니다.</p>
+
+<p>기존 table에서 일부의 데이터를 이용해 따로 table을 생성해야 하는 경우 일반적으로 View를 이용해서
+처리하는 경우가 많습니다. 데이터의 중복문제 그리고 권한과 같은 문제를 해결할 수 있기 때문입니다.</p>
+
+<p>간단하게 View를 생성해 보도록 하겠습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">v_memberTBL</span>
+<span class="k">AS</span>
+    <span class="k">SELECT</span> <span class="n">memberName</span><span class="p">,</span> <span class="n">memberAddress</span> <span class="k">FROM</span> <span class="n">memberTBL</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">v_memberTBL</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p><a href="/assets/built/images/database-mysql-view-select.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-view-select.png" alt="view select" />
+</a></p>
+
+<p>잘 생각해보면 <code class="highlighter-rouge">View</code>의 실체가 무엇인지 눈치챌 수 있습니다. View의 실체는 바로 <code class="highlighter-rouge">SELECT</code>문
+입니다. 우리가 View에 접근하게 되면 View 생성 시 입력한 SELECT문이 그 때 동작하게 됩니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Stored Procedure(스토어드 프로시져)</strong></p>
+
+<p><code class="highlighter-rouge">Stored Procedure</code>란 MySQL에서 제공하는 프로그래밍 기능을 의미합니다. 즉, SQL문
+여러개를 하나로 묶어서 편리하게 사용하는 기능이라고 생각하시면 됩니다. 또한 단순히 SQL문을
+묶는 역할만 하는게 아니라 일반적인 프로그래밍 언어와 같은 기능을 담당할 수 도 있습니다.</p>
+
+<p>일반적으로 실무에서는 직접적인 SQL문을 이용하는 것보다 Stored Procedure를 만들어놓고 
+호출하는 방식을 이용합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">DELIMITER</span> <span class="o">//</span>
+<span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="n">myProc</span><span class="p">()</span>
+<span class="k">BEGIN</span>
+    <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">memberTBL</span> <span class="k">WHERE</span> <span class="n">memberName</span><span class="o">=</span><span class="s1">'아이유'</span><span class="p">;</span>
+    <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">productTBL</span> <span class="k">WHERE</span> <span class="n">productName</span><span class="o">=</span><span class="s1">'냉장고'</span><span class="p">;</span>
+<span class="k">END</span> <span class="o">//</span>
+
+<span class="k">DELIMITER</span> <span class="p">;</span>
+
+</code></pre></div></div>
+
+<p>위의 코드에서 <code class="highlighter-rouge">DELIMITER</code>는 구분문자를 의미합니다. 구분문자를 <code class="highlighter-rouge">;</code>에서 <code class="highlighter-rouge">//</code>로 변경한다는
+의미이고 이렇게 하는 이유는 BEGIN부터 END까지 하나의 단락으로 묶어주기 위함입니다. 함수선언이
+끝나면 다시 원래대로 <code class="highlighter-rouge">DELIMITER</code>를 <code class="highlighter-rouge">;</code>으로 돌려놔야 합니다.</p>
+
+<p>이렇게 함수를 생성한 후 호출해보죠</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">CALL myProc();</code></p>
+</blockquote>
+
+<p><a href="/assets/built/images/database-mysql-call-stored-procedure.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-call-stored-procedure.png" alt="call stored procedure" />
+</a></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Trigger(트리거)</strong></p>
+
+<p><code class="highlighter-rouge">Trigger</code>는 table에 부착되어 table에 <code class="highlighter-rouge">INSERT</code>, <code class="highlighter-rouge">UPDATE</code>, <code class="highlighter-rouge">DELETE</code> 작업이
+발생되면 실행되는 코드를 의미합니다.</p>
+
+<p>간단한 예로 memberTBL에서 회원을 삭제할 때 추후에 삭제된 사람들의 명단을 알고 싶다면
+삭제하기 전에 삭제대상이 된 사람의 정보를 다른 table에 저장해 놓아야 합니다. 이런 작업을
+자동화 해주는 방법이 바로 Trigger라고 생각하시면 됩니다.</p>
+
+<p>간단한 코드로 실습을 한번 진행하도록 하죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">deleteMemberTBL</span> <span class="p">(</span>
+    <span class="n">memberID</span> <span class="n">CHAR</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span>
+    <span class="n">memberName</span> <span class="n">CHAR</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">memberAddress</span> <span class="n">CHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">deletedDate</span> <span class="n">DATE</span>
+<span class="p">);</span>    
+
+<span class="k">DELIMITER</span> <span class="o">//</span>
+<span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">trg_deleteMemberTBL</span>
+    <span class="k">AFTER</span> <span class="k">DELETE</span>  <span class="c1">-- 삭제 후 동작하게 지정</span>
+    <span class="k">ON</span> <span class="n">memberTBL</span> <span class="c1">-- Triger를 부착할 table</span>
+    <span class="k">FOR</span> <span class="k">EACH</span> <span class="k">ROW</span>
+<span class="k">BEGIN</span>
+    <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">deleteMemberTBL</span> <span class="k">VALUES</span> <span class="p">(</span>
+        <span class="k">OLD</span><span class="p">.</span><span class="n">memberID</span><span class="p">,</span> <span class="k">OLD</span><span class="p">.</span><span class="n">memberName</span><span class="p">,</span> <span class="k">OLD</span><span class="p">.</span><span class="n">memberAddress</span><span class="p">,</span> <span class="n">CURDATE</span><span class="p">());</span>
+<span class="k">END</span> <span class="o">//</span>
+
+<span class="k">DELIMITER</span> <span class="p">;</span>
+
+</code></pre></div></div>
+
+<p>위의 코드를 이용해 <code class="highlighter-rouge">deleteMemberTBL</code>와 <code class="highlighter-rouge">Trigger</code>를 생성한 후 아래의 코드로 
+Trigger가 정상적으로 동작하는지 확인해보도록 하죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">membertbl</span> <span class="k">WHERE</span> <span class="n">memberName</span> <span class="o">=</span> <span class="s1">'아이유'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">deletemembertbl</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p><a href="/assets/built/images/database-mysql-trigger-example.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-trigger-example.png" alt="trigger example" />
+</a></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Backup &amp; Restore</strong></p>
+
+<p>database관리 중 가장 중요한 일 중 하나는 바로 <code class="highlighter-rouge">Backup</code>입니다. 불의의 사태에 대비해
+데이터는 항상 주기적으로 backup을 받는것이 원칙입니다.</p>
+
+<p>간단하게 우리 <code class="highlighter-rouge">shopdb</code> database를 backup하는 과정에 대해서 알아보도록 하겠습니다.</p>
+
+<p><code class="highlighter-rouge">Workbench</code>에서 하단의 <code class="highlighter-rouge">Administration</code> tab을 선택하면 <code class="highlighter-rouge">Data Export</code> 메뉴가 있고
+이를 이용해서 backup을 수행합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-backup-progress.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-backup-progress.png" alt="database backup" />
+</a></p>
+
+<p><a href="/assets/built/images/database-mysql-backup-progress-finished.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-backup-progress-finished.png" alt="database backup finished" />
+</a></p>
+
+<p>이제 현재 사용중인 <code class="highlighter-rouge">productTBL</code>안의 모든 데이터를 <code class="highlighter-rouge">DELETE</code> 처리한 후 백업 받은 데이터를
+이용해서 복구해보도록 하겠습니다.</p>
+
+<p>먼저 다음의 SQL문으로 데이터를 삭제합니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">DELETE FROM productTBL;</code></p>
+</blockquote>
+
+<blockquote>
+  <p><code class="highlighter-rouge">SELECT * FROM productTBL;</code></p>
+</blockquote>
+
+<p>현재 사용중인 Database를 복원하면 문제발생의 소지가 있기 때문에 현재 database를
+다른 database로 변경합니다.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">USE sys;</code>   – sys database로 현재 사용 database 변경</p>
+</blockquote>
+
+<p>이번에는 <code class="highlighter-rouge">Data Import</code>를 이용해서 복원처리를 합니다.</p>
+
+<p><a href="/assets/built/images/database-mysql-restored-progress.png" data-fancybox="">
+    <img src="/assets/built/images/database-mysql-restored-progress.png" alt="database restored" />
+</a></p>
+
+<p>End.</p>
+
+<hr />
+
+<p><span class="lecture-reference">Data-Science 강좌는 아래의 책과 사이트를 참조했습니다.
+    조금 더 자세한 사항을 알고 싶으시면 해당 사이트를 방문하세요!!</span></p>
+
+<!--<ul class="lecture-reference">-->
+<!--    <li><a href="http://www.python.org/" target="_blank">Python Official HomePage</a></li>-->
+<!--    <li>점프 투 파이썬 - 이지스 퍼블리싱</li>-->
+<!--    <li>전문가를 위한 파이썬(Fluent Python) - 한빛미디어</li>-->
+<!--    <li>파이썬 웹 프로그래밍 - 한빛미디어</li>-->
+<!--    <li>이미지 출처 : <a href="http://www.freepik.com" target="_blank">Designed by rawpixel.com / Freepik</a></li>-->
+<!--</ul>-->
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 기존에 있던 post하단 이메일 subscribe 삭제 -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/moon9342">moon9342</a></h4>
+                                
+                                    <p><a href="https://www.youtube.com/channel/UCp-MztINXTRVkRGCnqnYNlQ">얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)</a></p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/moon9342">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/blog-cover2.png)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; IT Technical Training &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/data-science/">Data-science</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - Folium</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/data-science/">
+                                
+                                    See all 28 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-relational-database-mysql-data-modeling">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-relational-database-mysql-data-modeling">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Relational Database MySQL(4) - Data Modeling</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>{% include data-science-lecture-table-of-contents.html %} --- **Data Modeling**{: class="subtitle_fontAwesome" } `Database Modeling`이란 현 세계에서 구현해야 하는 작업이나 사물들을 DBMS의 database 개체로 옮기기 위한 과정이라고 할 수 있습니다. 상당히 추상적인데 조금 쉽게 설명하면 현실에서 사용되는</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-relational-database-mysql-setup">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-relational-database-mysql-setup">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Relational Database MySQL(2) - Install 및 환경설정</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://moon9342.github.io/">
+            
+            <span>IT Technical Training</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Relational Database MySQL(3) - MySQL 전체 운영 실습</div>
+
+
+
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">이 포스트를 공유하세요 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Relational+Database+MySQL%283%29+-+MySQL+%EC%A0%84%EC%B2%B4+%EC%9A%B4%EC%98%81+%EC%8B%A4%EC%8A%B5&amp;url=https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://moon9342.github.io/data-science-lecture-relational-database-mysql-first-execution"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+
+
+    <!-- floating-header에 이미지 삽입 -->
+<!--
+    <div class="floating-header-share">
+        <img src="assets/images/photo.jpg" width="50">
+    </div>
+-->
+
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://moon9342.github.io/">IT Technical Training</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/">GitHub Pages</a></section>
+                <nav class="site-footer-nav">
+                    <a href="mailto:moon9342@gmail.com">moon9342@gmail.com</a>
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Search IT Technical Training</h1>
+                <p class="subscribe-overlay-description">lunr.js를 이용한 posts 검색 </p>
+                <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" id="searchtext" type="text" name="searchtext"  placeholder="Search..." />
+    </div>
+    <!--<button class="" onclick="myFunc()" id="searchBtn" type="button" ><span>Search</span></button>-->
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+    <!--<script type="text/et-cetera">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>-->
+</span>
+
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113135179-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

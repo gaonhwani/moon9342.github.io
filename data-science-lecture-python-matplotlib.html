@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Python 데이터분석 라이브러리(11) - matplotlib</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+
+    <!-- 웹 폰트 설정 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css">
+
+    <!-- Font Awesome CDN 설정 => 느림.. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- JQuery fancybox plugin-->
+    <link rel="stylesheet" href="/assets/built/fancybox.css">
+    <script src="/assets/js/fancybox.js"></script>
+
+    <!-- custom.css -->
+    <link rel="stylesheet" href="/assets/built/custom.css">
+
+    <!-- syntax.css -->
+    <link rel="stylesheet" href="/assets/built/syntax.css">
+
+    <!-- gist.css -->
+    <link rel="stylesheet" href="/assets/built/better-gist-styles.css">
+
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--Dl Menu-->
+    <script src="/assets/js/modernizr.custom.js"></script>
+    <script src="/assets/js/jquery.dlmenu.js"></script>
+    <script src="/assets/js/menu_main.js"></script>
+
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-2687024418565562" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)" />
+    <link rel="shortcut icon" href="https://moon9342.github.io/assets/built/images/favicon.jpg" type="image/png" />
+    <link rel="canonical" href="https://moon9342.github.io/data-science-lecture-python-matplotlib" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="IT Technical Training" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Python 데이터분석 라이브러리(11) - matplotlib" />
+    <meta property="og:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta property="og:url" content="https://moon9342.github.io/data-science-lecture-python-matplotlib" />
+    <meta property="og:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2020-04-13T01:40:00+09:00" />
+    <meta property="article:modified_time" content="2020-04-13T01:40:00+09:00" />
+    <meta property="article:tag" content="Data-science" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Python 데이터분석 라이브러리(11) - matplotlib" />
+    <meta name="twitter:description" content="Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)" />
+    <meta name="twitter:url" content="https://moon9342.github.io/" />
+    <meta name="twitter:image" content="https://moon9342.github.io/assets/built/images/digital-marketing.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="IT Technical Training" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Data-science" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "IT Technical Training",
+        "logo": "https://moon9342.github.io/"
+    },
+    "url": "https://moon9342.github.io/data-science-lecture-python-matplotlib",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://moon9342.github.io/assets/built/images/digital-marketing.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://moon9342.github.io/data-science-lecture-python-matplotlib"
+    },
+    "description": "Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational Database MySQL(5) - MySQL Utility Relational Database MySQL(6) - SQL 기본 Relational Database MySQL(7) - SQL 고급(1)"
+}
+    </script>
+
+    <!-- <script type="text/et-cetera" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/et-cetera">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <!-- 사용자 browser 확인 코드 - Chrome이 아니면 경고 메시지 출력 -->
+
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        var _iPhone = false;
+        var _chrome = false;
+        var result = false;
+        if (agent.indexOf("iphone") != -1) {
+            _iPhone = true;
+        }
+        if (agent.indexOf("chrome") != -1) {
+            _chrome = true;
+        }
+
+        if( _iPhone || _chrome ) {
+            result = true;
+        }
+
+        if( !result ) {
+            alert("이 블로그는 Google Chrome Browser에 최적화 되어 있습니다 !!");
+        }
+
+    </script>
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Python 데이터분석 라이브러리(11) - matplotlib" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="/">IT Technical Training</a>
+            
+        
+        
+            
+<ul class="nav" role="menu">
+<!--    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>-->
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+<!--
+    <li class="nav-data-analysis-article" role="menuitem"><a href="/author/data-analysis/">Data Analysis(R)</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/author/python/">Python</a></li>
+    <li class="nav-python-article" role="menuitem"><a href="/tag/jekyll/">Jekyll</a></li>
+    <li class="nav-miscellaneous-article" role="menuitem"><a href="/author/fragmentary-knowledge/">Miscellaneous Article</a></li>
+-->
+<!--
+    <li class="nav-archive" role="menuitem">
+        <a href="/archive.html">All Posts</a>
+    </li>
+-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/jekyll/">Jekyll Blog 생성</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/python/">Python</a>
+    </li>
+    <li class="nav-data-science" role="menuitem">
+        <a href="/tag/data-science/">Data Science</a>
+    </li>
+    <li class="nav-machine-learning" role="menuitem">
+        <a href="/tag/machine-learning/">Machine Learning</a>
+    </li>
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/r/">R 기초강의</a>
+    </li>
+<!--    <li class="nav-python" role="menuitem">-->
+<!--        <a href="/tag/angular/">Angular</a>-->
+<!--    </li>-->
+    <li class="nav-python" role="menuitem">
+        <a href="/tag/et-cetera/">Et cetera</a>
+    </li>
+    <li class="nav-archive" role="menuitem">
+        <a href="/author_archive.html">All Posts</a>
+    </li>
+</ul>
+
+<!-- 아래 내용이 있으면 홈 화면 좌측 상단에 Navigation 버튼이 생성됨.. 굳이 필요없어서 comment 처리 -->
+
+<!--
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+    <button class="dl-trigger">Open Menu</button>
+    <ul class="dl-menu">
+        <li><a href="https://moon9342.github.io/">Home</a></li>
+        <li>
+            <a href="#">About</a>
+            <ul class="dl-submenu">
+                <li style="text-align: center">
+                    <img src="https://moon9342.github.io/assets/built/images/photo.jpg" alt="SungHoon Moon photo" class="author-photo">
+                </li>
+                <li>
+                    <h4>SungHoon Moon</h4>
+                    <p>Director of ATGLab. <br>Ph.D. in Computer Science</p>
+                </li>
+                <li><a href="https://moon9342.github.io/about/"><i class="fa fa-external-link"></i><span class="btn btn-inverse"> Learn More</span></a></li>
+                <li>
+                <a href="mailto:moon9342@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+            </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </ul>
+        </li>
+        <li>
+            <a href="#">Posts</a>
+            <ul class="dl-submenu">
+                <li><a href="https://moon9342.github.io/archive">All Posts</a></li>
+                <li><a href="https://moon9342.github.io/author_archive">All Tags</a></li>
+            </ul>
+        </li>
+        
+    </ul>
+</nav>
+-->
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Search</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full post tag-front-end ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="12 April 2020">12 April 2020</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/data-science/'>DATA-SCIENCE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Python 데이터분석 라이브러리(11) - matplotlib</h1>
+            </header>
+
+            
+<!--
+            post에 cover image를 표시하지 않게 설정
+            <figure class="post-full-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)">
+            </figure>
+-->
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p><span class="table-of-contents-list">Data-Science 강의는 여러 절로 구성되어 있습니다. </span></p>
+<ul class="table-of-contents-list">
+    <li><a href="./data-science-lecture-relational-database-mysql-introduction">Relational Database MySQL(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-setup">Relational Database MySQL(2) - Install 및 환경설정</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-first-execution">Relational Database MySQL(3) - MySQL 전체 운영 실습</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-data-modeling">Relational Database MySQL(4) - Data Modeling</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-utility">Relational Database MySQL(5) - MySQL Utility</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part1">Relational Database MySQL(6) - SQL 기본</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part2">Relational Database MySQL(7) - SQL 고급(1)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-sql-part3">Relational Database MySQL(8) - SQL 고급(2)</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-table-view">Relational Database MySQL(9) - Table &amp; View</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-1">Relational Database MySQL(10) - Index</a></li>
+    <li><a href="./data-science-lecture-relational-database-mysql-index-2">Relational Database MySQL(11) - Index 성능비교</a></li>
+
+    <li><a href="./data-science-lecture-nosql-database-mongodb-introduction">NoSQL Database MongoDB(1) - Introduction</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-data-modeling">NoSQL Database MongoDB(2) - NoSQL Data Modeling</a></li>
+    <li><a href="./data-science-lecture-nosql-database-mongodb-basic-concept">NoSQL Database MongoDB(3) - MongoDB Basic Concept</a></li>
+
+    <li><a href="./data-science-lecture-python-introduction">Python 데이터분석 라이브러리(0) - Introduction</a></li>
+    <li><a href="./data-science-lecture-python-numpy">Python 데이터분석 라이브러리(1) - NumPy</a></li>
+    <li><a href="./data-science-lecture-python-numpy-exercise">Python 데이터분석 라이브러리(2) - NumPy(Exercise)</a></li>
+
+    <li><a href="./data-science-lecture-python-pandas-series">Python 데이터분석 라이브러리(3) - Pandas(Series)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-basic">Python 데이터분석 라이브러리(4) - Pandas(DataFrame 생성)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-indexing">Python 데이터분석 라이브러리(5) - Pandas(DataFrame indexing)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-functions">Python 데이터분석 라이브러리(6) - Pandas(DataFrame functions)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-merge">Python 데이터분석 라이브러리(7) - Pandas(DataFrame merge)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-transform">Python 데이터분석 라이브러리(8) - Pandas(DataFrame 제어)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-group">Python 데이터분석 라이브러리(9) - Pandas(DataFrame Grouping)</a></li>
+    <li><a href="./data-science-lecture-python-pandas-dataframe-exercise">Python 데이터분석 라이브러리(10) - Pandas(Exercise)</a></li>
+    <li><a href="./data-science-lecture-python-matplotlib">Python 데이터분석 라이브러리(11) - matplotlib</a></li>
+    <li><a href="./data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+    <li><a href="./data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+    <li><a href="./data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - folium</a></li>
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-manipulation">Python 데이터분석 라이브러리(6) - Pandas(DataFrame 조작)</a></li>    -->
+<!--    <li><a href="./data-science-lecture-python-pandas-dataframe-multi-index">Python 데이터분석 라이브러리(8) - Pandas(DataFrame multi index)</a></li>    -->
+</ul>
+
+<hr />
+
+<p><strong class="subtitle_fontAwesome">데이터 시각화 - matplotlib</strong></p>
+
+<p>데이터 분석에서 다루는 데이터는 그 종류도 다양하고 무엇보다도 그 크기가 상당합니다. 이런
+데이터의 구조나 패턴을 파악해 데이터에 대한 통찰력을 얻기 위해서는 시각화 도구가 필수입니다.</p>
+
+<p>pandas는 내부에 데이터 시각화를 위한 도구를 내장하고 있지만 풍부한 편이 아니기 때문에
+다른 전문화 도구를 사용하는게 좋습니다.</p>
+
+<p><code class="highlighter-rouge">matplotlib</code>은 python의 표준 시각화 도구라고 할 수 있을 정도로 2D 평면 그래프에 대한
+다양한 포맷과 기능을 지원합니다. 여러가지 형태의 정형화된 plot뿐 아니라
+다양한 시각화 기능을 제공합니다.</p>
+
+<p>matplotlib으로 자주 사용되는 plot은 다음과 같습니다.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">line plot</code> (선 그래프)</li>
+  <li><code class="highlighter-rouge">area plot</code> (면적 그래프)</li>
+  <li><code class="highlighter-rouge">scatter plot</code> (산점도)</li>
+  <li><code class="highlighter-rouge">bar chart</code> (막대 그래프)</li>
+  <li><code class="highlighter-rouge">histogram</code> (히스토그램)</li>
+  <li><code class="highlighter-rouge">box plot</code> (박스 플롯)</li>
+</ul>
+
+<p>우리가 matplotlib을 사용할 때 일반적으로 pyplot이라는 서브패키지를 많이 사용합니다. 이 package는
+<code class="highlighter-rouge">matlab</code>의 시각화 명령을 거의 그대로 사용할 수 있도록 matplotlib의 하위 API를 wrapping한 명령어 집합을
+제공합니다. 쉽게 말해 간단한 시각화 기능을 이용할 경우 pyplot package를 이용하는 것 만으로도 충분하다는
+의미입니다.</p>
+
+<p>일반적으로 <code class="highlighter-rouge">matplotlib</code>의 alias는 <code class="highlighter-rouge">mpl</code>을 사용하고 <code class="highlighter-rouge">pyplot</code> 서브패키지는 <code class="highlighter-rouge">plt</code>라는 alias를 이용합니다.</p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">line plot</strong></p>
+
+<p><code class="highlighter-rouge">line plot</code>(선 그래프)는 가장 간단한 plot입니다. 
+연속하는 데이터의 값들을 직선 또는 곡선으로 연결하여 데이터의 값 사이의 관계를 표현합니다. 특히
+시계열 데이터와 같이 연속적인 값의 변화와 패턴을 파악하는데 적합합니다.</p>
+
+<p>간단한 코드를 이용해서 확인해 보도록 하겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c"># plot의 제목 설정</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Line Plot"</span><span class="p">)</span>
+
+<span class="c"># plot() 함수를 이용해 line plot을 그린다.</span>
+<span class="c"># 이 때 x 축의 자료 위치 즉, 틱(tick)은 자동으로 0, 1, 2, 3 이 된다. </span>
+<span class="c"># 만약 이 x tick 위치를 별도로 명시하고 싶다면 같은 길이의 리스트 혹은 배열 자료를 넣는다.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
+<span class="c"># plt.plot([10, 20, 30, 40], [1, 5, 12, 25])</span>
+
+<span class="c"># show() 함수는 실제로 차트로 렌더링(rendering)하고 마우스 움직임 등의 </span>
+<span class="c"># 이벤트를 기다리라는 함수입니다. </span>
+<span class="c"># 주피터 노트북에서는 셀 단위로 플롯 명령을 자동 렌더링 해주므로 show 명령이 필요없지만 </span>
+<span class="c"># 일반 파이썬 인터프리터로 가동되는 경우에는 꼭 필요하다.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-lineplot.png" alt="matplotlib-lineplot" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">line plot 예제</strong></p>
+
+<p>선 그래프를 그리기 위해 아래의 간단한 Excel 파일을 이용합니다. 통계청에서 제공한
+시도 간 인구 이동 데이터셋입니다.</p>
+
+<p><a href="/assets/downloads/lineplot_sample_data.zip" target="_blank">실습 Excel 파일(lineplot_sample_data.xlsx)</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># Excel 파일 로딩을 위해 다음의 module을 설치</span>
+<span class="c"># conda install openpyxl</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c"># Excel 데이터 로딩(시도별 전출입 인구수)</span>
+<span class="c"># 먼저 Excel 파일을 열어보고 어떻게 DataFrame으로 변환되는지 확인</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/lineplot_sample_data.xlsx'</span><span class="p">)</span>
+
+<span class="c"># 전출지별 column에 NaN(결치)가 포함되어 있다. Excel에서 DataFrame으로 변환 시 적절한 값을</span>
+<span class="c"># 찾지 못해서 결치값이 발생했는데 이 NaN을 바로 앞의 행의 값으로 대치하는 코드를 이용하여</span>
+<span class="c"># NaN을 처리한다.</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># 우리가 관심있는 데이터는 서울특별시에서 다른 지역으로 이동한 데이터이다.</span>
+<span class="c"># '전출지별'에서 '서울특별시'라는 값을 갖는 데이터만 추출하여 DataFrame을 새로 생성한다. </span>
+<span class="c"># 이때 '전입지별'에서 '서울특별시'라고 되어 있는 부분은 제외한다. </span>
+
+<span class="n">bool_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전출지별'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'서울특별시'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전입지별'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'서울특별시'</span><span class="p">)</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bool_mask</span><span class="p">]</span>
+
+<span class="c"># display(df_seoul)</span>
+
+<span class="c"># 결과로 나온 DataFrame에서 </span>
+<span class="c"># '전출지별' 열을 삭제한 후 '전입지별' 열의 이름을 '전입지'로 변경하고 </span>
+<span class="c"># '전입지' 열을 DataFrame의 행 index로 설정한다.</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전출지별'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s">'전입지별'</span><span class="p">:</span><span class="s">'전입지'</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'전입지'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># display(df_seoul)</span>
+
+<span class="c"># 선 그래프로 그릴 내용은 서울에서 경기도로 전입한 사람의 연도별 추이다.</span>
+
+<span class="c"># DataFrame에서 전입지가 '경기도'인 행을 선택해서 Series를 얻는다. </span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'경기도'</span><span class="p">]</span>
+
+<span class="c"># 해당 데이터로 line plot을 그리는데 x축은 Series의 index를 이용하고 </span>
+<span class="c"># y축은 데이터의 값을 사용한다.</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="c"># plt.plot(s) # Series인 경우 이렇게 해도 된다.</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample1.png" alt="matplotlib-예제1" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">한글 폰트 설정</strong></p>
+
+<p>matplotlib 사용 시 한글을 title 같은 곳에 지정하면 한글이 깨지는 현상이 발생합니다. 
+한글 폰트를 적용해야 정상적으로 한글이 출력됩니다.</p>
+
+<p>한글폰트는 아래의 링크에서 받으셔서 사용하시면 됩니다.</p>
+
+<p><a href="/assets/downloads/malgun.zip" target="_blank">MS 맑은고딕 폰트</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># 필요한 패키지와 라이브러리를 가져옴</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="n">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">)</span>
+
+<span class="c"># 그래프에서 마이너스(-) 폰트 깨지는 문제에 대한 대처</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c"># 데이터는 위에서 작업한 서울특별시에서 경기도로 전입한 연도별 인구 데이터를</span>
+<span class="c"># 사용합니다. </span>
+
+<span class="c"># 한글폰트 사용시 한글 출력안됨!</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 경기 인구 이동'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'연도'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c"># 폰트를 사용하는 방법은 사실 몇 가지 형태가 있습니다. </span>
+<span class="c"># 여기서는 FontProperties를 사용하는 방법에 대해서 알아보겠습니다. </span>
+
+<span class="n">font_path</span> <span class="o">=</span> <span class="s">'./font/malgun.ttf'</span>
+<span class="n">font_name</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">font_path</span><span class="p">)</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rc</span><span class="p">(</span><span class="s">'font'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">font_name</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 경기 인구 이동'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'연도'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c"># # 참고</span>
+<span class="c"># # matplotlib.rcParams[]으로 전역글꼴 설정 방법</span>
+<span class="c"># plt.rcParams["font.size"] = 20</span>
+<span class="c"># plt.rcParams["figure.figsize"] = (10,4)</span>
+<span class="c"># plt.rc('font', family=font_name)</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample2.png" alt="matplotlib-예제2" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">스타일 지정</strong></p>
+
+<p>plot 함수는 보는 사람이 그림을 더 알아보기 쉽도록 다양한 style을 지원합니다. 
+내용이 많으니 아래의 코드를 통해서 하나씩 알아보도록 하죠.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># 필요한 패키지와 라이브러리를 가져옴</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="n">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">)</span>
+
+<span class="c"># 그래프에서 마이너스(-) 폰트 깨지는 문제에 대한 대처</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">font_path</span> <span class="o">=</span> <span class="s">'./font/malgun.ttf'</span>
+<span class="n">font_name</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">font_path</span><span class="p">)</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rc</span><span class="p">(</span><span class="s">'font'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">font_name</span><span class="p">)</span>
+
+<span class="c"># 데이터는 위에서 작업한 서울특별시에서 경기도로 전입한 연도별 인구 데이터를</span>
+<span class="c"># 사용합니다. </span>
+
+<span class="c"># 그래프의 스타일 서식을 지정합니다.</span>
+<span class="c"># 사용할 수 있는 서식은 matplotlib API reference를 참조.</span>
+<span class="c"># print(plt.style.available)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="c"># 그래프의 그림 크기를 지정합니다. (단위는 인치로 가로, 세로 순으로 지정)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c"># x축 눈금이 읽기 어렵기 때문에 label을 회전시킨다.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s">'vertical'</span><span class="p">)</span>
+
+<span class="c"># 데이터를 plot 함수에 입력(마커표시 포함)</span>
+
+<span class="c"># 데이터 위치를 나타내는 기호를 마커(marker)라고 합니다. </span>
+<span class="c"># 자주 사용되는 마커는 다음과 같습니다.</span>
+<span class="c"># .(point marker), ,(pixel marker), o(circle marker), </span>
+<span class="c"># v(triangle_down marker), s(square marker),</span>
+<span class="c"># p(pentagon marker), *(star marker), +(plus marker), </span>
+<span class="c"># x(x marker), D(diamond marker), d(thin_diamond marker)</span>
+
+<span class="c"># 색깔을 지정하는 방법은 색 이름 혹은 약자를 사용하거나 </span>
+<span class="c"># # 문자로 시작되는 RGB코드를 사용할 수 있습니다.</span>
+<span class="c"># blue(b), green(g), red(r), cyan(c),magenta(m), </span>
+<span class="c"># yellow(y) black(k), white(w)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+         <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+         <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span>
+         <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 경기 인구 이동'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'연도'</span><span class="p">)</span>
+
+<span class="c"># 범례표시</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">'서울 -&gt; 경기'</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="c"># 그래프에 설명을 붙이는 주석도 추가한다.</span>
+<span class="c"># annotate() 함수를 이용하게되는데 arrowprops를 이용하면 텍스트대신</span>
+<span class="c"># 화살표를 이용할 수 있다. </span>
+<span class="c"># 일단 주석을 넣을 공간을 확보하기 위해서 y축 범위를 조금 늘려준 후</span>
+<span class="c"># annotate() 함수로 주석을 달아보자.</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">800000</span><span class="p">)</span>
+
+<span class="c"># 주석 - 화살표</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">""</span><span class="p">,</span>
+             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">620000</span><span class="p">),</span>     <span class="c"># 화살표의 머리부분 (끝점) x좌표는 index, y좌표는 값을 이용</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">290000</span><span class="p">),</span>  <span class="c"># 화살표의 꼬리부분 (시작점)</span>
+             <span class="n">xycoords</span><span class="o">=</span><span class="s">'data'</span><span class="p">,</span>    <span class="c"># 좌표체계</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s">'-&gt;'</span><span class="p">,</span>
+                             <span class="n">color</span><span class="o">=</span><span class="s">'skyblue'</span><span class="p">,</span>
+                             <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+             <span class="p">)</span>    
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">""</span><span class="p">,</span>
+             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">47</span><span class="p">,</span><span class="mi">450000</span><span class="p">),</span>     <span class="c"># 화살표의 머리부분 (끝점) x좌표는 index, y좌표는 값을 이용</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">580000</span><span class="p">),</span>  <span class="c"># 화살표의 꼬리부분 (시작점)</span>
+             <span class="n">xycoords</span><span class="o">=</span><span class="s">'data'</span><span class="p">,</span>    <span class="c"># 좌표체계</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s">'-&gt;'</span><span class="p">,</span>
+                             <span class="n">color</span><span class="o">=</span><span class="s">'olive'</span><span class="p">,</span>
+                             <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+             <span class="p">)</span>    
+
+<span class="c"># 주석표시 - 텍스트</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">'인구 이동 증가(1970-1995)'</span><span class="p">,</span>   <span class="c"># 텍스트입력</span>
+             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">350000</span><span class="p">),</span>               <span class="c"># 텍스트위치 기준점</span>
+             <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>                  <span class="c"># 텍스트회전 각도</span>
+             <span class="n">va</span><span class="o">=</span><span class="s">'baseline'</span><span class="p">,</span>                <span class="c"># 텍스트 상하 정렬</span>
+             <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span>                  <span class="c"># 텍스트 좌우 정렬</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span>
+            <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">'인구 이동 감소(1995-2017)'</span><span class="p">,</span>   <span class="c"># 텍스트입력</span>
+             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">500000</span><span class="p">),</span>               <span class="c"># 텍스트위치 기준점</span>
+             <span class="n">rotation</span><span class="o">=-</span><span class="mi">11</span><span class="p">,</span>                  <span class="c"># 텍스트회전 각도</span>
+             <span class="n">va</span><span class="o">=</span><span class="s">'baseline'</span><span class="p">,</span>                <span class="c"># 텍스트 상하 정렬</span>
+             <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span>                  <span class="c"># 텍스트 좌우 정렬</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span>
+            <span class="p">)</span>
+
+<span class="c"># 변경사항을 저장하고 그래프 표시</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample3.png" alt="matplotlib-예제3" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Figure, Axes, Axis</strong></p>
+
+<p>matplotlib이 그리는 그림은 Figure객체, Axes객체, Axis객체로 구성됩니다.</p>
+
+<p>Figure객체는 그림이 그려지는 canvas를 의미합니다. Figure객체는 한 개 이상의 
+Axes 객체를 포함하며, Axes 객체는 다시 두 개 이상의 Axis 객체를 포함합니다.</p>
+
+<p>모든 그림은 Figure 객체입니다. 하나의 Figure는 하나의 아이디 숫자와 window를 가지는데 
+jupyter notebook에서는 window객체가 생성되지 않지만 python을 독립 실행하는 경우 
+하나의 Figure당 하나의 window를 별도로 가지게 됩니다.</p>
+
+<p>Figure객체를 얻기 위해서는 <code class="highlighter-rouge">figure()</code> 함수를 이용해야 합니다. 하지만 일반적으로 
+plot 명령을 이용하면 자동으로 Figure를 생성해주기 때문에 일반적으로 <code class="highlighter-rouge">figure()</code> 함수를 
+잘 사용하지 않습니다. <code class="highlighter-rouge">figure()</code> 함수를 명시적으로 사용하는 경우는 여러개의 window를 
+동시에 띄워야 하거나 그림의 크기를 설정하고 싶을때 사용합니다.</p>
+
+<p>하나의 window안에 여러개의 plot을 배열 형태로 출력해야 하는 경우도 있습니다. 
+Figure 객체 안에 있는 각각의 plot은 Axes라고 불리는 객체에 속합니다.</p>
+
+<p>Axes 객체를 생성하려면 원래는 <code class="highlighter-rouge">subplot</code> 함수를 사용해서 명시적으로 Axes 객체를 얻어야 합니다. 
+또한 plot 함수를 사용하면 자동으로 Axes 객체를 생성해 줍니다.</p>
+
+<p><code class="highlighter-rouge">subplot</code>은 그리드 형태의 Axes 객체들을 생성합니다.</p>
+
+<p>이 <code class="highlighter-rouge">subplots</code> 함수를 이용하면 복수의 Axes 객체를 동시에 생성할 수도 있습니다. 
+이때는 2차원 ndarray 형태로 Axes 객체가 반환됩니다.</p>
+
+<p>하나의 <code class="highlighter-rouge">Axes</code> 객체는 두 개 이상의 <code class="highlighter-rouge">Axis</code> 객체를 가질 수 있습니다. 
+<code class="highlighter-rouge">Axis</code> 객체는 plot의 가로축이나 세로축을 나타내는 객체입니다.</p>
+
+<p>여러가지 plot을 하나의 Axes 객체에 표시할 때 y값의 크기가 달라서 표시하기 힘든 경우가 
+종종있습니다. 이 때는 <code class="highlighter-rouge">twinx()</code> 함수를 이용해 복수의 y 축을 가진 plot을 만들수 있습니다.
+<code class="highlighter-rouge">twinx</code> 명령은 x축을 공유하는 새로운 <code class="highlighter-rouge">Axes</code> 객체를 만들어줍니다.</p>
+
+<p>그러면 코드를 이용해서 하나하나 살펴보도록 하겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># 필요한 패키지와 라이브러리를 가져옴</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="n">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">)</span>
+
+<span class="c"># 그래프에서 마이너스(-) 폰트 깨지는 문제에 대한 대처</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">font_path</span> <span class="o">=</span> <span class="s">'./font/malgun.ttf'</span>
+<span class="n">font_name</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">font_path</span><span class="p">)</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rc</span><span class="p">(</span><span class="s">'font'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">font_name</span><span class="p">)</span>
+
+<span class="c"># 데이터는 위에서 작업한 서울특별시에서 경기도로 전입한 연도별 인구 데이터를</span>
+<span class="c"># 사용합니다. </span>
+
+<span class="c"># 그래프의 스타일 서식을 지정합니다.</span>
+<span class="c"># 사용할 수 있는 서식은 matplotlib API reference를 참조.</span>
+<span class="c"># print(plt.style.available)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="c"># 그래프의 그림 크기를 지정합니다. (단위는 인치로 가로, 세로 순으로 지정)</span>
+<span class="c">#  figure에 2개의 subplot을 생성합니다. </span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'서울 -&gt; 경기 인구 이동'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'기간'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c"># 선을 그리지 않고 점으로만 표시</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+         <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+         <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span>
+         <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s">'서울 -&gt; 경기'</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">800000</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">800000</span><span class="p">)</span>
+
+<span class="c"># 축 눈금 label 지정 및 회전</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c"># 축 눈금 label 크기</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'x'</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c"># 변경사항을 저장하고 그래프 표시</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample4.png" alt="matplotlib-예제4" /></p>
+
+<p>하나의 Axes에 여러 개의 그래프를 추가하는 것도 가능합니다. 이번에는
+데이터를 조금 바꿔서 서울특별시에서 충청남도, 경상북도, 강원도로 이동한 인구 변화 그래프 3개를
+하나의 같은 화면에 그려보도록 하겠습니다.</p>
+
+<p>데이터를 만들기 위해 python의 <code class="highlighter-rouge">map()</code> 함수가 사용됩니다. 
+map은 리스트의 요소를 지정된 함수로 처리해주는 함수입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># Excel 파일 로딩을 위해 다음의 module을 설치</span>
+<span class="c"># conda install openpyxl</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/lineplot_sample_data.xlsx'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+
+<span class="n">bool_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전출지별'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'서울특별시'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전입지별'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'서울특별시'</span><span class="p">)</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bool_mask</span><span class="p">]</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전출지별'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s">'전입지별'</span><span class="p">:</span><span class="s">'전입지'</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'전입지'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># 서울에서 충청남도, 경상북도, 강원도로 이동한 이구 데이터 값만 추출</span>
+<span class="n">col_year</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">2018</span><span class="p">)))</span>
+<span class="c"># print(col_year)</span>
+
+<span class="n">new_df</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'충청남도'</span><span class="p">,</span> <span class="s">'경상북도'</span><span class="p">,</span> <span class="s">'강원도'</span><span class="p">],</span> <span class="n">col_year</span><span class="p">]</span>
+
+<span class="c"># display(new_df)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">col_year</span><span class="p">,</span> <span class="n">new_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'충청남도'</span><span class="p">,:],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span><span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'olive'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'서울 -&gt; 충남'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">col_year</span><span class="p">,</span> <span class="n">new_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'경상북도'</span><span class="p">,:],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span><span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'skyblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'서울 -&gt; 경남'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">col_year</span><span class="p">,</span> <span class="n">new_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'강원도'</span><span class="p">,:],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span><span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span>
+         <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'magenta'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'서울 -&gt; 강원'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 충청남도, 경상북도, 강원도 인구 이동'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'기간'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s">'vertical'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">70000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c"># 참고(matplotlib의 color)</span>
+
+<span class="c"># import matplotlib</span>
+
+<span class="c"># colors = {}  # dictionary (color명:HEX값)</span>
+
+<span class="c"># for c_name, c_hex in matplotlib.colors.cnames.items():</span>
+<span class="c">#     colors[c_name] = c_hex</span>
+    
+<span class="c"># print(colors)</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample5.png" alt="matplotlib-예제5" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Area Chart</strong></p>
+
+<p>면적 그래프(area plot)는 각 열의 데이터를 선 그래프로 구현하는데, 선 그래프와 x축 사이의 
+공간에 색을 입히는 개념입니다. 색의 투명도는 기본값이 0.5로 투과되어 보이게 됩니다.</p>
+
+<p>위에서 살펴본 plot() 함수에 <code class="highlighter-rouge">kind=area</code> 설정을 추가하면 간단하게 구현할 수 있습니다. 
+조심해야 할 점은 그래프를 그릴때 누적여부를 설정할 수 있는데 기본값이 ‘stacked=True’입니다.
+즉, 누적그래프를 그린다는 것입니다. 이 경우 각 열의 패턴과 함께 전체의 합계가 어떻게 변하는지를
+파악할 수 있습니다. 그래서 면적 그래프를 다른말로 누적 선 그래프(<code class="highlighter-rouge">stacked line plot</code>)이라고
+하기도 합니다.</p>
+
+<p>위에서 실습했던 데이터를 이용하여 이번에는 area plot을 그려보기로 하겠습니다. stacked 설정을
+변경해서 한번 확인해보세요.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/lineplot_sample_data.xlsx'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+
+<span class="n">bool_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전출지별'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'서울특별시'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전입지별'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'서울특별시'</span><span class="p">)</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bool_mask</span><span class="p">]</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전출지별'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s">'전입지별'</span><span class="p">:</span><span class="s">'전입지'</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'전입지'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># 서울에서 충청남도, 경상북도, 강원도로 이동한 이구 데이터 값만 추출</span>
+<span class="n">col_year</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">2018</span><span class="p">)))</span>
+<span class="c"># print(col_year)</span>
+
+<span class="n">new_df</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'충청남도'</span><span class="p">,</span> <span class="s">'경상북도'</span><span class="p">,</span> <span class="s">'강원도'</span><span class="p">],</span> <span class="n">col_year</span><span class="p">]</span>
+
+<span class="n">trans_new_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+<span class="c"># index를 정수형으로 변경</span>
+<span class="n">trans_new_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">trans_new_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c"># display(trans_new_df)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="n">trans_new_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'area'</span><span class="p">,</span>
+                  <span class="n">stacked</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>       <span class="c"># 그래프 누적 여부</span>
+                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 충청남도, 경상북도, 강원도 인구 이동'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'기간'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s">'vertical'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample6.png" alt="matplotlib-예제6" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Bar Chart</strong></p>
+
+<p>막대 그래프(bar plot)는 데이터 값의 크기에 비례하여 높이를 갖는 직사각형 막대로 표현합니다. 
+세로형과 가로형 두 가지가 존재하며 세로형인 경우 정보 제공 측면에서 보면 선 그래프와 큰 차이는
+없습니다.</p>
+
+<p>세로형 막대 그래프는 시간적으로 차이가 나는 두 점에서 데이터 값의 차이를 보다 잘 설명한다는
+특징이 있습니다. 즉, 시계열 데이터를 표현하는데 적합하다고 생각하시면 됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/lineplot_sample_data.xlsx'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+
+<span class="n">bool_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전출지별'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'서울특별시'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전입지별'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'서울특별시'</span><span class="p">)</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bool_mask</span><span class="p">]</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전출지별'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s">'전입지별'</span><span class="p">:</span><span class="s">'전입지'</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'전입지'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># 서울에서 충청남도, 경상북도, 강원도로 이동한 이구 데이터 값만 추출</span>
+<span class="n">col_year</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">2018</span><span class="p">)))</span>
+<span class="c"># print(col_year)</span>
+
+<span class="n">new_df</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'충청남도'</span><span class="p">,</span> <span class="s">'경상북도'</span><span class="p">,</span> <span class="s">'강원도'</span><span class="p">],</span> <span class="n">col_year</span><span class="p">]</span>
+
+<span class="n">trans_new_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+<span class="c"># index를 정수형으로 변경</span>
+<span class="n">trans_new_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">trans_new_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="n">trans_new_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">,</span>
+                  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                  <span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+                  <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s">'orange'</span><span class="p">,</span> <span class="s">'green'</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">30000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 충청남도, 경상북도, 강원도 인구 이동'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'기간'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s">'vertical'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample7.png" alt="matplotlib-예제7" /></p>
+
+<p>가로형 막대 그래프는 각 변수 사이 값의 크기 차이를 설명하는데 적합합니다. <code class="highlighter-rouge">kind=barh</code> 설정을
+통해 가로형 막대 그래프를 그릴 수 있습니다.</p>
+
+<p>그럼 간단한 문제 하나만 그려보죠. 우리가 사용하는 데이터에서 2010~2017년의 기간동안
+서울에서 각 시도로 이동한 인구의 합계를 구하여 시도별로 비교하는 
+그래프를 그려보도록 하겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/lineplot_sample_data.xlsx'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+
+<span class="n">bool_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전출지별'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'서울특별시'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'전입지별'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'서울특별시'</span><span class="p">)</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">bool_mask</span><span class="p">]</span>
+
+<span class="n">df_seoul</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전출지별'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s">'전입지별'</span><span class="p">:</span><span class="s">'전입지'</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">df_seoul</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'전입지'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># 서울에서 충청남도, 경상북도, 강원도로 이동한 이구 데이터 값만 추출</span>
+<span class="n">col_year</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">2018</span><span class="p">)))</span>
+<span class="c"># print(col_year)</span>
+
+<span class="n">new_df</span> <span class="o">=</span> <span class="n">df_seoul</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s">'충청남도'</span><span class="p">,</span> <span class="s">'경상북도'</span><span class="p">,</span> <span class="s">'강원도'</span><span class="p">],</span> <span class="n">col_year</span><span class="p">]</span>
+
+<span class="n">new_df</span><span class="p">[</span><span class="s">'합계'</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_df</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">sort_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[[</span><span class="s">'합계'</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'합계'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">sort_df</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+
+<span class="n">sort_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'barh'</span><span class="p">,</span>
+             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+             <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s">'rebeccapurple'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'서울 -&gt; 충청남도, 경상북도, 강원도 인구 이동'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'기간'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'이동 인구수'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample8.png" alt="matplotlib-예제8" /></p>
+
+<p>지금까지는 그래프를 그릴 때 y축을 하나만 사용했었습니다. Excel 처럼 보조 축을 추가하여 2개의
+y축을 가지는 그래프는 어떻게 그릴 수 있을까요?</p>
+
+<p>이번에는 조금 다른 데이터를 가지고 2개의 y축을 가지는 그래프를 그려보도록 하겠습니다.</p>
+
+<p>사용할 데이터는 2018년 통계청에서 제공한 남북한 발전량 데이터셋입니다. 파일은 아래의 링크에서
+다운로드 할 수 있습니다.</p>
+
+<p><a href="/assets/downloads/korea_power_generation.zip" target="_blank">실습 Excel 파일(korea_power_generation.xlsx)</a></p>
+
+<p>기본축에는 연도별 북한의 발전량을 막대그래프로 표현합니다. 
+발전량은 화력과 수력발전량을 각각 누적 막대그래프로 표시하고 보조축에는 선 그래프를 표시합니다.
+보조축의 선 그래프는 북한 발전량의 전년 대비 증감률을 백분률로 표시합니다.</p>
+
+<p>이를 위해 excel 파일을 불려들여서 pandas DataFrame을 생성하고 데이터를 정리하는 작업이
+먼저 선행되어야 합니다.</p>
+
+<p>코드로 알아보도록 하죠.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">font_manager</span><span class="p">,</span> <span class="n">rc</span>
+
+<span class="c"># 한글폰트 설정</span>
+<span class="n">font_path</span> <span class="o">=</span> <span class="s">'./font/malgun.ttf'</span>
+<span class="n">font_name</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">font_path</span><span class="p">)</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rc</span><span class="p">(</span><span class="s">'font'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">font_name</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c"># 그래프에서 마이너스(-) 폰트 깨지는 문제에 대한 대처</span>
+
+
+<span class="c"># Data Loading</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">'./data/korea_power_generation.xlsx'</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># 북한의 화력, 수력발전 데이터만 필요하기 때문에 slicing을 통해 데이터 추출</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># 필요없는 column 제거 및 index 설정. </span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'전력량 (억㎾h)'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'발전 전력별'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>   <span class="c"># x축이 연도가 되기 위해 전치행렬(행과 열을 교환)로 변환</span>
+
+<span class="c"># display(df)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'합계'</span><span class="p">:</span><span class="s">'총발전량'</span><span class="p">})</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s">'총발전량-1년'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'총발전량'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'증감률'</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">'총발전량'</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s">'총발전량-1년'</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+
+<span class="c"># 그래프 그리기</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'수력'</span><span class="p">,</span> <span class="s">'화력'</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">,</span> 
+                               <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                               <span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+                               <span class="n">stacked</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s">'증감률'</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+         <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'전년대비 증감률(</span><span class="si">%</span><span class="s">)'</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'연도'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'발전량 (억㎾h)'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'전년대비 증감률(</span><span class="si">%</span><span class="s">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'북한 전력 발전량 (1990-2016)'</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper left'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample9.png" alt="matplotlib-예제9" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Histogram</strong></p>
+
+<p>Histogram은 변수가 하나인 단변수 데이터의 빈도수를 그래프로 표현하는 것입니다.</p>
+
+<p>x축을 같은 크기의 여러 구간으로 나누고 각 구간에 속하는 데이터 값의 개수(빈도)를
+y축에 표시합니다. 당연히 구간을 나느는 간격의 크기에 따라 빈도가 달라지고 histogram의
+모양이 변하게 됩니다.</p>
+
+<p>UCI 자동차 연비 데이터셋을 이용해 간단한 histogram을 그려보도록 하죠.</p>
+
+<p><a href="/assets/downloads/auto-mpg.zip" target="_blank">실습 CSV 파일(auto-mpg.csv)</a></p>
+
+<p>pandas로 해당 데이터를 살펴보면 column명이 들어있지 않다는 걸 알게됩니다.
+각 column의 의미는 순서대로 다음과 같습니다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+'MPG'(연비),
+'Cylinders'(실린더 수),
+'Displacement'(배기량),
+'Horsepower'(출력),
+'Weight'(차중),
+'Acceleration'(가속능력),
+'Model Year'(출시년도),
+'Origin'(제조국),   # 1=USA, 2=EU, 3=JPN
+'Name'(모델명)    
+
+</code></pre></div></div>
+
+<p>Histogram을 그리기 위해 다음의 코드를 살표보도록 하죠.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'classic'</span><span class="p">)</span>  <span class="c"># ggplot보다는 classic이 보기 편하다</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./data/auto-mpg.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># column이름 지정</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'MPG'</span><span class="p">,</span><span class="s">'Cylinders'</span><span class="p">,</span><span class="s">'Displacement'</span><span class="p">,</span><span class="s">'Horsepower'</span><span class="p">,</span><span class="s">'Weight'</span><span class="p">,</span><span class="s">'Acceleration'</span><span class="p">,</span>
+              <span class="s">'Model Year'</span><span class="p">,</span><span class="s">'Origin'</span><span class="p">,</span><span class="s">'Name'</span><span class="p">]</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># MPG(연비- miles per gallon) 열에 대한 histogram</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s">'MPG'</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'hist'</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'MPG Histogram'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'mpg'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample10.png" alt="matplotlib-예제10" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Scatter(산점도)</strong></p>
+
+<p>산점도는 서로 다른 두 변수 사이의 관계를 나타냅니다. 2개의 연속 변수를 각각 x축과 
+y축에 하나씩 놓고 데이터 값이 위치하는 (x,y) 좌표를 찾아서 점으로 표시합니다.</p>
+
+<p>다음의 코드를 이용해 산점도를 그려보죠.</p>
+
+<p>사용하는 데이터 셋은 위에서 사용했던 <code class="highlighter-rouge">MPG Data Set</code>입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'default'</span><span class="p">)</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./data/auto-mpg.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># column이름 지정</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'MPG'</span><span class="p">,</span><span class="s">'Cylinders'</span><span class="p">,</span><span class="s">'Displacement'</span><span class="p">,</span><span class="s">'Horsepower'</span><span class="p">,</span><span class="s">'Weight'</span><span class="p">,</span><span class="s">'Acceleration'</span><span class="p">,</span>
+              <span class="s">'Model Year'</span><span class="p">,</span><span class="s">'Origin'</span><span class="p">,</span><span class="s">'Name'</span><span class="p">]</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'scatter'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'Weight'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'MPG'</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Scatter plot - MPG vs. Weight'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample11.png" alt="matplotlib-예제11" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Pie Chart</strong></p>
+
+<p>파이 차트는 우리가 흔히 보는 그래프 형태로 원을 파이 조각처럼 나누어서 표현합니다. 조각의
+크기는 해당 변수에 속하는 데이터 값의 크기에 비례합니다.</p>
+
+<p>위의 <code class="highlighter-rouge">MPG Data Set</code>을 이용해서 <code class="highlighter-rouge">Origin</code>(제조국) 별 차량 생산량을 파이 차트로 표현해
+보겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'default'</span><span class="p">)</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./data/auto-mpg.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># column이름 지정</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'MPG'</span><span class="p">,</span><span class="s">'Cylinders'</span><span class="p">,</span><span class="s">'Displacement'</span><span class="p">,</span><span class="s">'Horsepower'</span><span class="p">,</span><span class="s">'Weight'</span><span class="p">,</span><span class="s">'Acceleration'</span><span class="p">,</span>
+              <span class="s">'Model Year'</span><span class="p">,</span><span class="s">'Origin'</span><span class="p">,</span><span class="s">'Name'</span><span class="p">]</span>
+
+
+<span class="c"># 제조국에 따른 차량 개수 카운트를 위해 column을 하나 추가</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'count'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">df_origin</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'Origin'</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span>
+
+<span class="c"># display(df_origin)</span>
+
+<span class="n">df_origin</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s">'USA'</span><span class="p">,</span> <span class="s">'EU'</span><span class="p">,</span> <span class="s">'JPN'</span><span class="p">]</span>
+
+<span class="c"># display(df_origin)</span>
+
+<span class="n">df_origin</span><span class="p">[</span><span class="s">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'pie'</span><span class="p">,</span>
+                        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+                        <span class="n">autopct</span><span class="o">=</span><span class="s">'</span><span class="si">%1.1</span><span class="s">f</span><span class="si">%%</span><span class="s">'</span><span class="p">,</span>   <span class="c"># 퍼센트 % 표시</span>
+                        <span class="n">startangle</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>       <span class="c"># 파이 조각을 나누는 시작점(각도)</span>
+                        <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s">'red'</span><span class="p">,</span> <span class="s">'green'</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model Origin'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'equal'</span><span class="p">)</span>  <span class="c"># 파이 차트의 비율을 같게 조정(최대한 원에 가깝게 조정)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">df_origin</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample12.png" alt="matplotlib-예제12" /></p>
+
+<hr />
+
+<p><strong class="subtitle2_fontAwesome">Boxplot</strong></p>
+
+<p>Boxplot은 데이터의 분포를 파악하는데 이용됩니다. Boxplot의 특징 중 하나는 그래프상에
+<code class="highlighter-rouge">outlier</code>가 같이 표현된다는 것입니다. 즉, 데이터에 이상치가 있는지를 쉽게 눈으로 파악할
+수 있도록 해 줍니다.</p>
+
+<p>Boxplot은 4분위값을 이용해서 아래의 그림처럼 표현됩니다.</p>
+
+<p><img src="assets/built/images/python-matplotlib-boxplot.png" alt="matplotlib-boxplot-예제" /></p>
+
+<p>Origin에 따른 연비분포를 Boxplot을 이용해서 그려보도록 하겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">font_manager</span><span class="p">,</span> <span class="n">rc</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">font_path</span> <span class="o">=</span> <span class="s">'./font/malgun.ttf'</span>
+<span class="n">font_name</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">font_path</span><span class="p">)</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">rc</span><span class="p">(</span><span class="s">'font'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">font_name</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'seaborn-poster'</span><span class="p">)</span>  
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./data/auto-mpg.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="c"># display(df)</span>
+
+<span class="c"># column이름 지정</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'MPG'</span><span class="p">,</span><span class="s">'Cylinders'</span><span class="p">,</span><span class="s">'Displacement'</span><span class="p">,</span><span class="s">'Horsepower'</span><span class="p">,</span><span class="s">'Weight'</span><span class="p">,</span><span class="s">'Acceleration'</span><span class="p">,</span>
+              <span class="s">'Model Year'</span><span class="p">,</span><span class="s">'Origin'</span><span class="p">,</span><span class="s">'Name'</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Origin'</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span><span class="s">'MPG'</span><span class="p">],</span>
+               <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Origin'</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">,</span><span class="s">'MPG'</span><span class="p">],</span>
+               <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Origin'</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">,</span><span class="s">'MPG'</span><span class="p">]],</span>
+            <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">'USA'</span><span class="p">,</span> <span class="s">'EU'</span><span class="p">,</span> <span class="s">'JPN'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'제조국가별 연비 분포'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="assets/built/images/python-matplotlib-plot-sample13.png" alt="matplotlib-예제13" /></p>
+
+<p>End.</p>
+
+<hr />
+
+<p><span class="lecture-reference">Data-Science 강좌는 아래의 책과 사이트를 참조했습니다.
+    조금 더 자세한 사항을 알고 싶으시면 해당 사이트를 방문하세요!!</span></p>
+
+<!--<ul class="lecture-reference">-->
+<!--    <li><a href="http://www.python.org/" target="_blank">Python Official HomePage</a></li>-->
+<!--    <li>점프 투 파이썬 - 이지스 퍼블리싱</li>-->
+<!--    <li>전문가를 위한 파이썬(Fluent Python) - 한빛미디어</li>-->
+<!--    <li>파이썬 웹 프로그래밍 - 한빛미디어</li>-->
+<!--    <li>이미지 출처 : <a href="http://www.freepik.com" target="_blank">Designed by rawpixel.com / Freepik</a></li>-->
+<!--</ul>-->
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            <!-- 기존에 있던 post하단 이메일 subscribe 삭제 -->
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/moon9342">moon9342</a></h4>
+                                
+                                    <p><a href="https://www.youtube.com/channel/UCp-MztINXTRVkRGCnqnYNlQ">얼큰우동TV, 쉽게배우는 IT(Programming,Machine Learning,금융)</a></p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/moon9342">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+                    <article class="read-next-card"
+                        
+                            style="background-image: url(/assets/built/images/blog-cover2.png)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; IT Technical Training &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/data-science/">Data-science</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-folium">Python 데이터분석 라이브러리(13) - Folium</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-seaborn">Python 데이터분석 라이브러리(12) - seaborn</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/data-science-lecture-python-statistics">Python 데이터분석을 위한 통계</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                    
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/data-science/">
+                                
+                                    See all 28 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-python-statistics">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-python-statistics">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Python 데이터분석을 위한 통계</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>{% include data-science-lecture-table-of-contents.html %} --- **Python 데이터분석을 위한 Statistics**{: class="subtitle_fontAwesome" } 여기서는 데이터분석을 위해 기본적으로 알고 가야 하는 몇가지 통계적인 개념들에 대해서 이야기해 보려 합니다. 중요한 개념들을 수학적 표현보다는 이해하기 쉬운 언어와 예제를</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/data-science-lecture-python-pandas-dataframe-exercise">
+                <div class="post-card-image" style="background-image: url(/assets/built/images/digital-marketing.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/data-science-lecture-python-pandas-dataframe-exercise">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Data-science</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Python 데이터분석 라이브러리(10) - Pandas(Exercise)</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>Data-Science 강의는 여러 절로 구성되어 있습니다. Relational Database MySQL(1) - Introduction Relational Database MySQL(2) - Install 및 환경설정 Relational Database MySQL(3) - MySQL 전체 운영 실습 Relational Database MySQL(4) - Data Modeling Relational</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/built/images/economy-author-logo.jpg" alt="moon9342" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/moon9342/">moon9342</a>
+                        </span>
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://moon9342.github.io/">
+            
+            <span>IT Technical Training</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Python 데이터분석 라이브러리(11) - matplotlib</div>
+
+
+
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">이 포스트를 공유하세요 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Python+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B6%84%EC%84%9D+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%2811%29+-+matplotlib&amp;url=https://moon9342.github.io/data-science-lecture-python-matplotlib"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://moon9342.github.io/data-science-lecture-python-matplotlib"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+
+
+    <!-- floating-header에 이미지 삽입 -->
+<!--
+    <div class="floating-header-share">
+        <img src="assets/images/photo.jpg" width="50">
+    </div>
+-->
+
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://moon9342.github.io/">IT Technical Training</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/">GitHub Pages</a></section>
+                <nav class="site-footer-nav">
+                    <a href="mailto:moon9342@gmail.com">moon9342@gmail.com</a>
+                    <a href="/">Latest Posts</a>
+                    
+                    
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Search IT Technical Training</h1>
+                <p class="subscribe-overlay-description">lunr.js를 이용한 posts 검색 </p>
+                <span id="searchform" method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" onkeyup="myFunc()" id="searchtext" type="text" name="searchtext"  placeholder="Search..." />
+    </div>
+    <!--<button class="" onclick="myFunc()" id="searchBtn" type="button" ><span>Search</span></button>-->
+    <script type="text/javascript">
+        function myFunc() {
+            if(event.keyCode == 13) {
+                var url = encodeURIComponent($("#searchtext").val());
+                location.href = "/search.html?query=" + url;
+            }
+        }
+    </script>
+    <!--<script type="text/et-cetera">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>-->
+</span>
+
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113135179-1', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
